@@ -147,6 +147,8 @@ DESCRIPTION
 .   && (mach) != bfd_mach_sparc_v8plusm8)
 .  bfd_arch_spu,       {* PowerPC SPU.  *}
 .#define bfd_mach_spu		256
+.  bfd_arch_sun32,		{* SUN32. *}
+.#define bfd_mach_sun32 0x1
 .  bfd_arch_mips,      {* MIPS Rxxxx.  *}
 .#define bfd_mach_mips3000		3000
 .#define bfd_mach_mips3900		3900
@@ -653,6 +655,7 @@ extern const bfd_arch_info_type bfd_score_arch;
 extern const bfd_arch_info_type bfd_sh_arch;
 extern const bfd_arch_info_type bfd_sparc_arch;
 extern const bfd_arch_info_type bfd_spu_arch;
+extern const bfd_arch_info_type bfd_sun32_arch;
 extern const bfd_arch_info_type bfd_tic30_arch;
 extern const bfd_arch_info_type bfd_tic4x_arch;
 extern const bfd_arch_info_type bfd_tic54x_arch;
@@ -741,6 +744,7 @@ static const bfd_arch_info_type * const bfd_archures_list[] =
     &bfd_sh_arch,
     &bfd_sparc_arch,
     &bfd_spu_arch,
+    &bfd_sun32_arch,
     &bfd_tic30_arch,
     &bfd_tic4x_arch,
     &bfd_tic54x_arch,
