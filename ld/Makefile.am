@@ -220,6 +220,7 @@ ALL_EMULATION_SOURCES = \
 	eelf32_sparc_sol2.c \
 	eelf32_sparc_vxworks.c \
 	eelf32_spu.c \
+	eelf32_sun32.c \
 	eelf32_tic6x_be.c \
 	eelf32_tic6x_le.c \
 	eelf32_tic6x_linux_be.c \
@@ -917,6 +918,9 @@ eelf32_spu.c: $(srcdir)/emulparams/elf32_spu.sh $(srcdir)/emultempl/spuelf.em \
   $(srcdir)/emultempl/spu_ovl.@OBJEXT@_c $(srcdir)/emultempl/spu_icache.@OBJEXT@_c \
   ldemul-list.h \
   $(ELF_DEPS) $(srcdir)/scripttempl/elf.sc ${GEN_DEPENDS}
+
+eelf32sun32.c: $(srcdir)/emulparams/elf32sun32.sh \
+	$(ELF_GEN_DEPS) $(srcdir)/scripttempl/elf.sc ${GEN_DEPENDS}
 
 $(srcdir)/emultempl/spu_ovl.@OBJEXT@_c: @MAINT@ $(srcdir)/emultempl/spu_ovl.S
 	if ../gas/as-new --version \
