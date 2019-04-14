@@ -77,10 +77,10 @@ HFILES = \
 	mep-desc.h mep-opc.h \
 	microblaze-opc.h \
 	mt-desc.h mt-opc.h \
+	sun32-desc.h sun32-opc.h \
 	score-opc.h \
 	sh-opc.h \
 	sysdep.h \
-	sun32-desc.h sun32-opc.h \
 	xc16x-desc.h xc16x-opc.h \
 	xstormy16-desc.h xstormy16-opc.h \
 	z8k-opc.h
@@ -231,6 +231,11 @@ TARGET_LIBOPCODES_CFILES = \
 	score-dis.c \
 	score7-dis.c \
 	sh-dis.c \
+	sun32-desc.c \
+	sun32-opc.c \
+	sun32-ibld.c \
+	sun32-asm.c \
+	sun32-dis.c \
 	sparc-dis.c \
 	sparc-opc.c \
 	spu-dis.c \
@@ -252,11 +257,6 @@ TARGET_LIBOPCODES_CFILES = \
 	visium-dis.c \
 	visium-opc.c \
 	wasm32-dis.c \
-	sun32-asm.c \
-	sun32-desc.c \
-	sun32-dis.c \
-	sun32-ibld.c \
-	sun32-opc.c \
 	xc16x-asm.c \
 	xc16x-desc.c \
 	xc16x-dis.c \
@@ -357,8 +357,8 @@ po/POTFILES.in: @MAINT@ Makefile
 CLEANFILES = \
 	stamp-epiphany stamp-fr30 stamp-frv stamp-ip2k stamp-iq2000 stamp-lm32 \
 	stamp-m32c stamp-m32r stamp-mep stamp-mt \
-	stamp-or1k stamp-xc16x stamp-sun32 stamp-xstormy16 \
-	libopcodes.a stamp-lib
+	stamp-or1k stamp-xc16x stamp-xstormy16 \
+	libopcodes.a stamp-lib stamp-sun32
 
 
 CGENDIR = @cgendir@
@@ -373,7 +373,7 @@ CGENDEPS = \
 	$(CGENDIR)/opc-opinst.scm \
 	cgen-asm.in cgen-dis.in cgen-ibld.in
 
-CGEN_CPUS = epiphany fr30 frv ip2k iq2000 lm32 m32c m32r mep mt or1k xc16x sun32 xstormy16
+CGEN_CPUS = epiphany fr30 frv ip2k iq2000 lm32 m32c m32r mep mt or1k xc16x xstormy16 sun32
 
 if CGEN_MAINT
 EPIPHANY_DEPS = stamp-epiphany
@@ -388,8 +388,8 @@ MEP_DEPS = stamp-mep
 MT_DEPS = stamp-mt
 OR1K_DEPS = stamp-or1k
 XC16X_DEPS = stamp-xc16x
-SUN32_DEPS = stamp-sun32
 XSTORMY16_DEPS = stamp-xstormy16
+SUN32_DEPS = stamp-sun32
 else
 EPIPHANY_DEPS =
 FR30_DEPS =
@@ -488,6 +488,12 @@ stamp-mep: $(CGENDEPS) $(CPUDIR)/mep.cpu $(CPUDIR)/mep-default.cpu $(CPUDIR)/mep
 	$(MAKE) run-cgen arch=mep prefix=mep options= \
 		archfile=$(CPUDIR)/mep.cpu opcfile=$(CPUDIR)/mep.opc extrafiles=
 
+$(srcdir)/sun32-desc.h $(srcdir)/sun32-desc.c $(srcdir)/sun32-opc.h $(srcdir)/sun32-opc.c $(srcdir)/sun32-ibld.c $(srcdir)/sun32-asm.c $(srcdir)/sun32-dis.c: $(SUN32_DEPS)
+	@true
+stamp-sun32: $(CGENDEPS) $(srcdir)/../cpu/sun32.cpu $(srcdir)/../cpu/sun32.opc
+	$(MAKE) run-cgen arch=sun32 prefix=sun32 options= \
+		archfile=$(srcdir)/../cpu/sun32.cpu opcfile=$(srcdir)/../cpu/sun32.opc extrafiles=
+
 $(srcdir)/mt-desc.h $(srcdir)/mt-desc.c $(srcdir)/mt-opc.h $(srcdir)/mt-opc.c $(srcdir)/mt-ibld.c $(srcdir)/mt-asm.c $(srcdir)/mt-dis.c: $(MT_DEPS)
 	@true
 stamp-mt: $(CGENDEPS) $(CPUDIR)/mt.cpu $(CPUDIR)/mt.opc
@@ -507,14 +513,6 @@ stamp-xc16x: $(CGENDEPS) $(CPUDIR)/xc16x.cpu $(CPUDIR)/xc16x.opc
 	$(MAKE) run-cgen arch=xc16x prefix=xc16x options= \
 		archfile=$(CPUDIR)/xc16x.cpu \
 		opcfile=$(CPUDIR)/xc16x.opc \
-		extrafiles=
-
-$(srcdir)/sun32-desc.h $(srcdir)/sun32-desc.c $(srcdir)/sun32-opc.h $(srcdir)/sun32-opc.c $(srcdir)/sun32-ibld.c $(srcdir)/sun32-asm.c $(srcdir)/sun32-dis.c: $(SUN32_DEPS)
-	@true
-stamp-sun32: $(CGENDEPS) $(CPUDIR)/sun32.cpu $(CPUDIR)/sun32.opc
-	$(MAKE) run-cgen arch=sun32 prefix=xc16x options= \
-		archfile=$(CPUDIR)/sun32.cpu \
-		opcfile=$(CPUDIR)/sun32.opc \
 		extrafiles=
 
 $(srcdir)/xstormy16-desc.h $(srcdir)/xstormy16-desc.c $(srcdir)/xstormy16-opc.h $(srcdir)/xstormy16-opc.c $(srcdir)/xstormy16-ibld.c $(srcdir)/xstormy16-asm.c $(srcdir)/xstormy16-dis.c: $(XSTORMY16_DEPS)
