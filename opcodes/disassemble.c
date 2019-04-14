@@ -83,6 +83,7 @@
 #define ARCH_sh
 #define ARCH_sparc
 #define ARCH_spu
+#define ARCH_sun32
 #define ARCH_tic30
 #define ARCH_tic4x
 #define ARCH_tic54x
@@ -419,6 +420,11 @@ disassembler (enum bfd_architecture a,
 #ifdef ARCH_spu
     case bfd_arch_spu:
       disassemble = print_insn_spu;
+      break;
+#endif
+#ifdef ARCH_sun32
+    case bfd_arch_sun32:
+      disassemble = print_insn_sun32;
       break;
 #endif
 #ifdef ARCH_tic30
