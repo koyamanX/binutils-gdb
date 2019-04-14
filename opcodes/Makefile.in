@@ -466,6 +466,7 @@ HFILES = \
 	mep-desc.h mep-opc.h \
 	microblaze-opc.h \
 	mt-desc.h mt-opc.h \
+	sun32-desc.h sun32-opc.h \
 	score-opc.h \
 	sh-opc.h \
 	sysdep.h \
@@ -620,6 +621,11 @@ TARGET_LIBOPCODES_CFILES = \
 	score-dis.c \
 	score7-dis.c \
 	sh-dis.c \
+	sun32-desc.c \
+	sun32-opc.c \
+	sun32-ibld.c \
+	sun32-asm.c \
+	sun32-dis.c \
 	sparc-dis.c \
 	sparc-opc.c \
 	spu-dis.c \
@@ -711,7 +717,7 @@ CLEANFILES = \
 	stamp-epiphany stamp-fr30 stamp-frv stamp-ip2k stamp-iq2000 stamp-lm32 \
 	stamp-m32c stamp-m32r stamp-mep stamp-mt \
 	stamp-or1k stamp-xc16x stamp-xstormy16 \
-	libopcodes.a stamp-lib
+	libopcodes.a stamp-lib stamp-sun32
 
 CGENDIR = @cgendir@
 CPUDIR = $(srcdir)/../cpu
@@ -724,7 +730,7 @@ CGENDEPS = \
 	$(CGENDIR)/opc-opinst.scm \
 	cgen-asm.in cgen-dis.in cgen-ibld.in
 
-CGEN_CPUS = epiphany fr30 frv ip2k iq2000 lm32 m32c m32r mep mt or1k xc16x xstormy16
+CGEN_CPUS = epiphany fr30 frv ip2k iq2000 lm32 m32c m32r mep mt or1k xc16x xstormy16 sun32
 @CGEN_MAINT_FALSE@EPIPHANY_DEPS = 
 @CGEN_MAINT_TRUE@EPIPHANY_DEPS = stamp-epiphany
 @CGEN_MAINT_FALSE@FR30_DEPS = 
@@ -751,6 +757,7 @@ CGEN_CPUS = epiphany fr30 frv ip2k iq2000 lm32 m32c m32r mep mt or1k xc16x xstor
 @CGEN_MAINT_TRUE@XC16X_DEPS = stamp-xc16x
 @CGEN_MAINT_FALSE@XSTORMY16_DEPS = 
 @CGEN_MAINT_TRUE@XSTORMY16_DEPS = stamp-xstormy16
+@CGEN_MAINT_TRUE@SUN32_DEPS = stamp-sun32
 MOSTLYCLEANFILES = aarch64-gen$(EXEEXT_FOR_BUILD) i386-gen$(EXEEXT_FOR_BUILD) \
 	ia64-gen$(EXEEXT_FOR_BUILD) s390-mkopc$(EXEEXT_FOR_BUILD) s390-opc.tab \
 	z8kgen$(EXEEXT_FOR_BUILD) opc2c$(EXEEXT_FOR_BUILD)
@@ -1033,6 +1040,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparc-opc.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/spu-dis.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/spu-opc.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sun32-asm.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sun32-desc.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sun32-dis.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sun32-ibld.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sun32-opc.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tic30-dis.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tic4x-dis.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tic54x-dis.Plo@am__quote@
@@ -1462,6 +1474,12 @@ $(srcdir)/mep-desc.h $(srcdir)/mep-desc.c $(srcdir)/mep-opc.h $(srcdir)/mep-opc.
 stamp-mep: $(CGENDEPS) $(CPUDIR)/mep.cpu $(CPUDIR)/mep-default.cpu $(CPUDIR)/mep-core.cpu $(CPUDIR)/mep-h1.cpu $(CPUDIR)/mep-ext-cop.cpu $(CPUDIR)/mep-sample-ucidsp.cpu $(CPUDIR)/mep-rhcop.cpu $(CPUDIR)/mep-fmax.cpu $(CPUDIR)/mep.opc
 	$(MAKE) run-cgen arch=mep prefix=mep options= \
 		archfile=$(CPUDIR)/mep.cpu opcfile=$(CPUDIR)/mep.opc extrafiles=
+
+$(srcdir)/sun32-desc.h $(srcdir)/sun32-desc.c $(srcdir)/sun32-opc.h $(srcdir)/sun32-opc.c $(srcdir)/sun32-ibld.c $(srcdir)/sun32-asm.c $(srcdir)/sun32-dis.c: $(SUN32_DEPS)
+	@true
+stamp-sun32: $(CGENDEPS) $(srcdir)/../cpu/sun32.cpu $(srcdir)/../cpu/sun32.opc
+	$(MAKE) run-cgen arch=sun32 prefix=sun32 options= \
+		archfile=$(srcdir)/../cpu/sun32.cpu opcfile=$(srcdir)/../cpu/sun32.opc extrafiles=
 
 $(srcdir)/mt-desc.h $(srcdir)/mt-desc.c $(srcdir)/mt-opc.h $(srcdir)/mt-opc.c $(srcdir)/mt-ibld.c $(srcdir)/mt-asm.c $(srcdir)/mt-dis.c: $(MT_DEPS)
 	@true
