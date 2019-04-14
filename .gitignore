@@ -1,3 +1,6 @@
+build
+cgen
+
 *.diff
 *.patch
 *.orig
