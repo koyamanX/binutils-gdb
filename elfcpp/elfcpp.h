@@ -271,6 +271,7 @@ enum EM
   EM_TI_PRU = 144,
   EM_AARCH64 = 183,
   EM_TILEGX = 191,
+  EM_SUN32 = 0x11ff,
   // The Morph MT.
   EM_MT = 0x2530,
   // DLX.
