@@ -220,7 +220,7 @@ ALL_EMULATION_SOURCES = \
 	eelf32_sparc_sol2.c \
 	eelf32_sparc_vxworks.c \
 	eelf32_spu.c \
-	eelf32_sun32.c \
+	eelf32sun32.c \
 	eelf32_tic6x_be.c \
 	eelf32_tic6x_le.c \
 	eelf32_tic6x_linux_be.c \
