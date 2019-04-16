@@ -6701,6 +6701,10 @@ assembler and not (currently) written to any object files.  */
 
 /* S12Z relocations.  */
   BFD_RELOC_S12Z_OPR,
+
+/* SUN32 relocations.  */
+  BFD_RELOC_SUN32_PCREL_25,
+  BFD_RELOC_SUN32_ABS_20,
   BFD_RELOC_UNUSED };
 
 typedef enum bfd_reloc_code_real bfd_reloc_code_real_type;
