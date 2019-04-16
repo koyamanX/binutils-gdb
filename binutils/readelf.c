@@ -148,6 +148,7 @@
 #include "elf/sh.h"
 #include "elf/sparc.h"
 #include "elf/spu.h"
+#include "elf/sun32.h"
 #include "elf/tic6x.h"
 #include "elf/tilegx.h"
 #include "elf/tilepro.h"
@@ -844,6 +845,7 @@ guess_is_rela (unsigned int e_machine)
     case EM_SPARC32PLUS:
     case EM_SPARCV9:
     case EM_SPU:
+    case EM_SUN32:
     case EM_TI_C6000:
     case EM_TILEGX:
     case EM_TILEPRO:
@@ -1303,6 +1305,10 @@ dump_relocations (Filedata *          filedata,
 
 	case EM_SPU:
 	  rtype = elf_spu_reloc_type (type);
+	  break;
+
+	case EM_SUN32:
+	  rtype = elf_sun32_reloc_type (type);
 	  break;
 
 	case EM_V800:
@@ -2301,6 +2307,7 @@ get_machine_name (unsigned e_machine)
     case EM_S390_OLD:
     case EM_S390:		return "IBM S/390";
     case EM_SPU:		return "SPU";
+    case EM_SUN32:		return "SUN32";
       /* 30 */
     case EM_V800:		return "Renesas V850 (using RH850 ABI)";
     case EM_FR20:		return "Fujitsu FR20";
@@ -12502,6 +12509,8 @@ is_32bit_abs_reloc (Filedata * filedata, unsigned int reloc_type)
 	|| reloc_type == 23; /* R_SPARC_UA32.  */
     case EM_SPU:
       return reloc_type == 6; /* R_SPU_ADDR32 */
+	case EM_SUN32:
+	  return reloc_type == 1;	
     case EM_TI_C6000:
       return reloc_type == 1; /* R_C6000_ABS32.  */
     case EM_TILEGX:
