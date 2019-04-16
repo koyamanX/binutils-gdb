@@ -79,7 +79,6 @@ const pseudo_typeS md_pseudo_table[] =
 {
   { NULL, 	NULL, 		0 }
 };
-
 void
 md_begin (void)
 {
@@ -143,7 +142,7 @@ md_section_align (segT segment, valueT size)
 symbolS *
 md_undefined_symbol (char *name ATTRIBUTE_UNUSED)
 {
-  return 0;
+  return NULL;
 }
 
 /* Interface to relax_segment.  */
@@ -170,46 +169,36 @@ md_convert_frag (bfd *   abfd ATTRIBUTE_UNUSED,
    given a PC relative reloc. */
 
 long
-md_pcrel_from_section (fixS * fixP, segT sec)
+md_pcrel_from_section (fixS * fixP, segT sec ATTRIBUTE_UNUSED)
 {
-  if (fixP->fx_addsy != (symbolS *) NULL
-      && (! S_IS_DEFINED (fixP->fx_addsy)
-	  || S_GET_SEGMENT (fixP->fx_addsy) != sec
-          || S_IS_EXTERNAL (fixP->fx_addsy)
-          || S_IS_WEAK (fixP->fx_addsy)))
-    {
-      if (S_GET_SEGMENT (fixP->fx_addsy) != sec
-          && S_IS_DEFINED (fixP->fx_addsy)
-          && ! S_IS_EXTERNAL (fixP->fx_addsy)
-          && ! S_IS_WEAK (fixP->fx_addsy))
-        return fixP->fx_offset;
-
-    /* The symbol is undefined (or is defined but not in this section).
-       Let the linker figure it out. */
-    return 0;
-  }
-
-  return (fixP->fx_frag->fr_address + fixP->fx_where) & ~3;
+  
+  return (fixP->fx_frag->fr_address + fixP->fx_where);
 }
 
 /* Return the bfd reloc type for OPERAND of INSN at fixup FIXP.
    Returns BFD_RELOC_NONE if no reloc type can be found.
    *FIXP may be modified if desired. */
-
+#include <stdio.h>
 bfd_reloc_code_real_type
 md_cgen_lookup_reloc (const CGEN_INSN *    insn ATTRIBUTE_UNUSED,
 		      const CGEN_OPERAND * operand,
 		      fixS *               fixP)
 {
-  fixP->fx_pcrel = 0;
+	fixP->fx_pcrel = 0;
 
-  switch (operand->type)
-    {
-    default : /* Avoid -Wall warning.  */
-      break;
+	switch (operand->type)
+	{
+		case SUN32_OPERAND_T25:
+			fixP->fx_pcrel = 1;
+			return BFD_RELOC_SUN32_PCREL_25;
+			/*
+		case SUN32_OPERAND_T20:
+			return BFD_RELOC_SUN32_ABS_20;
+			*/
+		default : /* Avoid -Wall warning.  */
+			break;
     }
-
-  return BFD_RELOC_NONE;
+	return BFD_RELOC_NONE;
 }
 
 /* Write a value out to the object file, using the appropriate endianness.  */
@@ -233,3 +222,4 @@ md_atof (int type, char *litP, int *sizeP)
 {
   return ieee_md_atof (type, litP, sizeP, TRUE);
 }
+
