@@ -23,23 +23,20 @@
 
 
 /* -- opc.h */
-#undef  CGEN_DIS_HASH_SIZE
-#define CGEN_DIS_HASH_SIZE 1024
-#undef  CGEN_DIS_HASH
-#define CGEN_DIS_HASH(buffer, value) ((value & 0x7fe00000) >> 21)
 /* -- */
 /* -- opc.c */
 /* -- */
 /* -- asm.c */
-static const char * MISSING_CLOSING_PARENTHESIS = N_("missing `)'");
+//static const char * MISSING_CLOSING_PARENTHESIS = N_("missing `)'");
 #define CGEN_VERBOSE_ASSEMBLER_ERRORS
-
+/*
 void opcodes_error_handler(char *fmt, ...) {
 	va_list ap;
 	va_start(ap, fmt);
 	fprintf (stderr, fmt, ap); fputc ('\n', stderr);
 	va_end(ap);
 }
+*/
 /* -- */
 /* -- dis.c */
 /* disassembler print hack */

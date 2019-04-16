@@ -1,7 +1,6 @@
-; SUN32 CPU description.  -*- Scheme -*-
-; Copyright 2019 Free Software Foundation, Inc.
-;
-; Written By Ckoyama <ckoyama.1996@gmail.com>
+; SUN32 architecture.  -*- Scheme -*-
+; Copyright 2018, 2019 Free Software Foundation, Inc.
+; Contributed by Chihiro Koyama <ckoyama.1996@gmail.com>
 ;
 ; This file is part of the GNU Binutils.
 ;
@@ -24,8 +23,8 @@
 
 (define-arch
 	(name sun32)
-	(comment "SUN32 Architecture")
-	(default-alignment forced)
+	(comment "SUN Architecture")
+	(default-alignment aligned)
 	(insn-lsb0? #t)
 	(machs sun32)
 	(isas sun32)
@@ -33,23 +32,25 @@
 
 (define-isa
 	(name sun32)
+	(comment "SUN32 instructin set")
 	(default-insn-bitsize 32)
 	(base-insn-bitsize 32)
-	(decode-assist (31 30))
+;	(decode-assist (31 30 29 28 27 26 25))
 	(liw-insns 1)
 	(parallel-insns 1)
+;	(setup-semantics (set-quiet (reg h-gr pc) (add pc 4)))
 )
 
 (define-cpu
 	(name sun32)
-	(comment "SUN32")
+	(comment "SUN base family")
 	(endian big)
 	(word-bitsize 32)
 )
 
 (define-mach
 	(name sun32)
-	(comment "sun32")
+	(comment "SUN cpu")
 	(cpu sun32)
 )
 
@@ -57,8 +58,8 @@
 	(name sun32)
 	(comment "sun32")
 	(mach sun32)
-	(unit u-exec "exec unit" ()
-		1 1
+	(unit u-exec "Execution Unit" ()
+		1 1 ;issue done
 		()
 		()
 		()
@@ -66,25 +67,16 @@
 	)
 )
 
-(dnh
-	h-pc
-	"PC"
-	(PC)
-	(pc SI)
-	()
-	()
-	()
-)
+; Hardware
+(dnh h-pc "program counter" (PC) (pc SI) () () ())
 
-(dnh
-	h-gr
-	"General purpose register"
+(dnh h-gr "General Purpose Register"
 	()
 	(register WI (32))
 	(keyword "" 
 		(
-			(r0   0) (r1   1) (r2   2) (r3   3) (r4   4)
-			(r5   5) (r6   6) (r7   7) (r8   8) (r9   9)
+			(r0 0) (r1 1) (r2 2) (r3 3) (r4 4)
+			(r5 5) (r6 6) (r7 7) (r8 8) (r9 9)
 			(r10 10) (r11 11) (r12 12) (r13 13) (r14 14)
 			(r15 15) (r16 16) (r17 17) (r18 18) (r19 19)
 			(r20 20) (r21 21) (r22 22) (r23 23) (r24 24)
@@ -95,6 +87,17 @@
 	()
 	()
 )
+
+; define-normal-hardware(pmacro)
+(dnh h-int9 "9 bit int" () (immediate (INT 9)) () () ())
+(dnh h-int12 "12 bit int" () (immediate (INT 12)) () () ())
+(dnh h-int15  "15 bit int"  () (immediate (INT  14)) () () ())
+(dnh h-int25 "25 bit int" () (immediate (INT 25)) () () ())
+(dnh h-int20 "20 bit int" () (immediate (INT 20)) () () ())
+(dnh h-uint20 "20 bit uint" () (immediate (UINT 20)) () () ())
+	
+
+; instruction format
 
 (define-pmacro (dwf x-name x-comment x-attrs x-word-offset x-word-length 
 					x-start x-length x-mode x-encode x-decode)
@@ -111,29 +114,135 @@
 		(.splice decode (.unsplice x-decode))
 	)
 )
+;NOTE
+;add multi field for i-type load store instruction
+;where u field is used to specifiy whether unsigned load or not
 
+; all type shared field
 (dwf f-type "TYPE Field" () 0 32 31 2 UINT (#f) (#f))
 (dwf f-op   "OP  Field"  () 0 32 29 5 UINT (#f) (#f))
 (dwf f-rd   "RD  Field"  () 0 32 24 5 UINT (#f) (#f))
 (dwf f-ra   "RA  Field"  () 0 32 19 5 UINT (#f) (#f))
+
+; rtype
 (dwf f-rb   "RB  Field"  () 0 32 14 5 UINT (#f) (#f))
-(dwf f-xxx    "X   Field"  () 0 32 9 10 UINT (#f) (#f))
+(dwf f-x    "X   Field"  () 0 32 9 10 UINT (#f) (#f))
 
-(dnop rd "destination register" () h-gr f-rd)
-(dnop ra "source register a" () h-gr f-ra)
-(dnop rb "source register b" () h-gr f-rb)
 
-(define-normal-insn-enum insn-type "type enums" () TYPE_ f-type
+; itype mem
+(dwf f-mems  "IMM Field shifted"   (ABS-ADDR) 0 32 8  9  INT (#f) (#f))
+(dwf f-sft  "SFT Field"   () 0 32 11  3 UINT (#f) (#f))
+(dwf f-a    "A   Field"   () 0 32 12 1 UINT (#f) (#f))
+(dwf f-s    "S   Field"   () 0 32 13 1 UINT (#f) (#f))
+(dwf f-u    "U   Field"   () 0 32 14 1 UINT (#f) (#f))
+(dwf f-mem  "IMM Field"   (ABS-ADDR) 0 32 11  12  INT (#f) (#f))
+
+
+; itype lui
+(dwf f-u20  "long IMM "   () 0 32 19 20 UINT (#f) (#f))
+
+; itype normal
+(dwf f-i15  "IMM  INT "   () 0 32 14 15  INT (#f) (#f))
+
+; btype
+(dwf f-mode "Addressin"   () 0 32 25 1 UINT (#f) (#f))
+(dwf f-cond "condition"   () 0 32 29 4 UINT (#f) (#f)) 
+
+; target
+;(dwf f-t25 "TARGET PC"    () 0 32 24 25 INT (#f) (#f))
+;(dwf f-t20 "TARGET REG"    () 0 32 19 20 INT (#f) (#f))
+
+(dwf f-pop25 "POP addr"    () 0 32 24 25 INT (#f) (#f))
+(df f-t25p 
+	"25 bit pc relative address word aligned" 
+	()
+	0 25 INT
+	((value pc) (sra WI (sub WI value (and WI pc (const -4))) (const 2)))
+	((value pc) (add WI (sll WI value (const 2)) (and WI pc (const -4))))
+)
+
+(df f-t20r
+	"20 bit reg relative address word aligned"
+	(ABS-ADDR)
+	0 20 INT
+	((value pc) (sra WI (sub WI value (and WI pc (const -4))) (const 2)))
+	((value pc) (add WI (sll WI value (const 2)) (and WI pc (const -4))))
+)
+	
+
+;NOTE
+;define-normal-insn-enum
+
+(define-normal-insn-enum insn-type 
+	"insn type enums" 
+	() 
+	TYPE_ 
+	f-type 
 	(.map .str (.iota 4))
 )
 
-(define-normal-insn-enum insn-op "op enums" () OP_ f-op
+(define-normal-insn-enum insn-op 
+	"insn opcode enums" 
+	() 
+	OP_ 
+	f-op 
 	(.map .str (.iota 32))
 )
-
-(define-normal-insn-enum insn-xxx "x" () XXX_ f-xxx
+(define-normal-insn-enum insn-u 
+	"insn u enums" 
+	() 
+	U_ 
+	f-u 
+	("0" "1")
+)
+(define-normal-insn-enum insn-s 
+	"insn s enums" 
+	() 
+	S_ 
+	f-s 
+	("0" "1")
+)
+(define-normal-insn-enum insn-a 
+	"insn a enums" 
+	() 
+	A_ 
+	f-a 
+	("0" "1")
+)
+(define-normal-insn-enum insn-x 
+	"insn a enums" 
+	() 
+	XXX_
+	f-x 
 	("0")
 )
+(define-normal-insn-enum insn-mode 
+	"insn amode enums" 
+	() 
+	MODE_ 
+	f-mode 
+	("0" "1")
+)
+(define-normal-insn-enum insn-cond
+	"insn cond enums"
+	()
+	COND_
+	f-cond
+	(.map .str (.iota 16))
+)
+
+; define-normal-operand
+(dnop rd "destination register" () h-gr f-rd)
+(dnop ra "source register a" () h-gr f-ra)
+(dnop rb "source register b" () h-gr f-rb)
+(dnop u20 "unsigned 20 bit" () h-uint20 f-u20)
+(dnop i15 "signed 15 bit" () h-int15 f-i15)
+(dnop m9  "byte aligned 9 bit"  () h-addr  f-mems)
+(dnop m12  "byte aligned 12 bit"  () h-addr  f-mem)
+; shifted by 2
+(dnop t25 "word aligned 25 bit" (ABS-ADDR) h-iaddr f-t25p)
+(dnop t20 "word aligned 20 bit" () h-iaddr f-t20r)
+(dnop pop25 "pop addr 25 bit" () h-iaddr f-pop25)
 
 (define-pmacro (rtype name mnemonic opcode)
 	(begin
@@ -148,11 +257,174 @@
 	)
 )
 
+(define-pmacro (itype-lui name mnemonic opcode)
+	(begin
+		(dni name
+			(.str mnemonic " itype-lui")
+			()
+			(.str mnemonic " $rd,$u20")
+			(+ TYPE_1 opcode rd u20)
+			()
+			()
+		)
+	)
+)
+(define-pmacro (itype name mnemonic opcode)
+	(begin
+		(dni name
+			(.str mnemonic " itype signed imm")
+			()
+			(.str mnemonic " $rd,$i15($ra)")
+			(+ TYPE_1 opcode rd ra i15)
+			()
+			()
+		)
+	)
+)
+(define-pmacro (itype name mnemonic opcode)
+	(begin
+		(dni name
+			(.str mnemonic " itype signed imm")
+			()
+			(.str mnemonic " $rd,$i15($ra)")
+			(+ TYPE_1 opcode rd ra i15)
+			()
+			()
+		)
+	)
+)
+(define-pmacro (itype-mem-u name mnemonic opcode)
+	(begin
+		(dni name
+			(.str mnemonic " itype u memory imm not shifted")
+			()
+			(.str mnemonic " $rd,$i15($ra)")
+			(+ TYPE_1 opcode rd ra U_1 S_0 A_0 i15)
+			()
+			()
+		)
+	)
+)
 
-(rtype rtype_add add OP_0)
-(rtype rtype_sub sub OP_1)
-(rtype rtype_or or OP_2)
-(rtype rtype_and and OP_3)
-(rtype rtype_xor xor OP_4)
+(define-pmacro (itype-mem name mnemonic opcode)
+	(begin
+		(dni name
+			(.str mnemonic " itype u memory imm not shifted")
+			()
+			(.str mnemonic " $rd,$i15($ra)")
+			(+ TYPE_1 opcode rd ra U_0 S_0 A_0 i15)
+			()
+			()
+		)
+	)
+)
+(define-pmacro (btype-pc name mnemonic cond)
+	(begin
+		(dni name
+			(.str mnemonic " btype pc-relative")
+			()
+			(.str mnemonic " $t25")
+			(+ TYPE_2 cond MODE_0 t25)
+			()
+			()
+		)
+	)
+)
+
+(define-pmacro (btype-ret name mnemonic cond)
+	(begin
+		(dni name
+			(.str mnemonic " btype ret")
+			()
+			(.str mnemonic " $pop25")
+			(+ TYPE_2 cond MODE_0 pop25)
+			()
+			()
+		)
+	)
+)
+
+(define-pmacro (btype-reg name mnemonic cond)
+	(begin
+		(dni name
+			(.str mnemonic " btype reg-relative")
+			()
+			(.str mnemonic " $t20($ra)")
+			(+ TYPE_2 cond MODE_1 ra t20)
+			()
+			()
+		)
+	)
+)
 
 
+; RTYPE
+(rtype add add OP_0)
+(rtype sub sub OP_16)
+(rtype sll sll OP_1)
+(rtype srl srl OP_2)
+(rtype sra sra OP_3)
+(rtype xor xor OP_4)
+(rtype or  or OP_20)
+(rtype and and OP_5)
+(rtype mult mult OP_6)
+(rtype multu multu OP_22)
+(rtype div div OP_7)
+(rtype divu divu OP_23)
+(rtype cmp cmp OP_24)
+
+
+; ITYPE 
+(itype addi add OP_0)
+(itype subi sub OP_0)
+(itype slli sll OP_1)
+(itype srli srl OP_2)
+(itype srai sra OP_3)
+(itype xori xor OP_4)
+(itype ori or  OP_20)
+(itype andi and OP_5)
+(itype multi mult OP_6)
+(itype multui multu OP_22)
+(itype divi div OP_7)
+(itype divui divu OP_23)
+(itype cmpi cmp OP_16)
+
+; ITYPE lui
+(itype-lui lui lui OP_8)
+
+(itype-mem lw lw OP_25)
+(itype-mem lh lh OP_26)
+(itype-mem lb lb OP_27)
+(itype-mem sw sw OP_29)
+(itype-mem sh sh OP_30)
+(itype-mem sb sb OP_31)
+
+
+(btype-pc bnepc   bne  COND_0)
+(btype-pc beqpc   beq  COND_1)
+(btype-pc bgtpc   bgt  COND_2)
+(btype-pc bgepc   bge  COND_3)
+(btype-pc bltpc   blt  COND_4)
+(btype-pc blepc   ble  COND_5)
+(btype-pc bpc     b    COND_6)
+(btype-pc bultpc  bult COND_7)
+(btype-pc bulepc  bule COND_8)
+(btype-pc bugtpc  bugt COND_9)
+(btype-pc bugepc  buge COND_10)
+(btype-pc callpc  call COND_13)
+
+(btype-reg bnereg   bne  COND_0)
+(btype-reg beqreg   beq  COND_1)
+(btype-reg bgtreg   bgt  COND_2)
+(btype-reg bgereg   bge  COND_3)
+(btype-reg bltreg   blt  COND_4)
+(btype-reg blereg   ble  COND_5)
+(btype-reg breg     b    COND_6)
+(btype-reg bultreg  bult COND_7)
+(btype-reg bulereg  bule COND_8)
+(btype-reg bugtreg  bugt COND_9)
+(btype-reg bugereg  buge COND_10)
+(btype-reg callreg  call COND_13)
+
+(btype-ret retpc   ret  COND_11)
+(btype-ret retipc  reti COND_12)
