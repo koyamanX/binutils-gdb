@@ -1,5 +1,5 @@
 ; SUN32 architecture.  -*- Scheme -*-
-; Copyright 2018, 2019 Free Software Foundation, Inc.
+; Copyright 2019 Free Software Foundation, Inc.
 ; Contributed by Chihiro Koyama <ckoyama.1996@gmail.com>
 ;
 ; This file is part of the GNU Binutils.
@@ -35,7 +35,7 @@
 	(comment "SUN32 instructin set")
 	(default-insn-bitsize 32)
 	(base-insn-bitsize 32)
-;	(decode-assist (31 30 29 28 27 26 25))
+	(decode-assist (31 30 29 28 27 26 25))
 	(liw-insns 1)
 	(parallel-insns 1)
 ;	(setup-semantics (set-quiet (reg h-gr pc) (add pc 4)))
@@ -89,12 +89,20 @@
 )
 
 ; define-normal-hardware(pmacro)
-(dnh h-int9 "9 bit int" () (immediate (INT 9)) () () ())
+
+; imm with shift
 (dnh h-int12 "12 bit int" () (immediate (INT 12)) () () ())
-(dnh h-int15  "15 bit int"  () (immediate (INT  14)) () () ())
+; imm without shift
+(dnh h-int15  "15 bit int"  () (immediate (INT  15)) () () ())
+; long imm
+(dnh h-uint20 "20 bit uint" () (immediate (UINT 20)) () () ())
+
+; branch target
 (dnh h-int25 "25 bit int" () (immediate (INT 25)) () () ())
 (dnh h-int20 "20 bit int" () (immediate (INT 20)) () () ())
-(dnh h-uint20 "20 bit uint" () (immediate (UINT 20)) () () ())
+
+(dnh h-uint18 "18 bit uint hi" () (immediate (UINT 18)) () () ())
+(dnh h-uint14 "14 bit uint lo" () (immediate (UINT 14)) () () ())
 	
 
 ; instruction format
@@ -118,41 +126,40 @@
 ;add multi field for i-type load store instruction
 ;where u field is used to specifiy whether unsigned load or not
 
-; all type shared field
 (dwf f-type "TYPE Field" () 0 32 31 2 UINT (#f) (#f))
 (dwf f-op   "OP  Field"  () 0 32 29 5 UINT (#f) (#f))
 (dwf f-rd   "RD  Field"  () 0 32 24 5 UINT (#f) (#f))
 (dwf f-ra   "RA  Field"  () 0 32 19 5 UINT (#f) (#f))
-
-; rtype
 (dwf f-rb   "RB  Field"  () 0 32 14 5 UINT (#f) (#f))
+
+; unused feild which must be filled with zero
 (dwf f-x    "X   Field"  () 0 32 9 10 UINT (#f) (#f))
+(dwf f-xxxh "xxx for 18hi" () 0 32 19 2 UINT (#f) (#f))
+(dwf f-xxxl "xxx for 16lo" () 0 32 15 1 UINT (#f) (#f))
 
-
-; itype mem
-(dwf f-mems  "IMM Field shifted"   (ABS-ADDR) 0 32 8  9  INT (#f) (#f))
+; itype memory
 (dwf f-sft  "SFT Field"   () 0 32 11  3 UINT (#f) (#f))
 (dwf f-a    "A   Field"   () 0 32 12 1 UINT (#f) (#f))
 (dwf f-s    "S   Field"   () 0 32 13 1 UINT (#f) (#f))
 (dwf f-u    "U   Field"   () 0 32 14 1 UINT (#f) (#f))
+(dwf f-mems  "IMM Field shifted"   (ABS-ADDR) 0 32 8  9  INT (#f) (#f))
 (dwf f-mem  "IMM Field"   (ABS-ADDR) 0 32 11  12  INT (#f) (#f))
 
+; load address for hi and lo
+(dwf f-u18   "18 hiField"  (ABS-ADDR) 0 32 17 18 UINT (#f) (#f))
+(dwf f-u14    "14 lo  Field"  (ABS-ADDR) 0 32 13 14 UINT (#f) (#f))
 
-; itype lui
+; long imm
 (dwf f-u20  "long IMM "   () 0 32 19 20 UINT (#f) (#f))
 
-; itype normal
+; itype imm
 (dwf f-i15  "IMM  INT "   () 0 32 14 15  INT (#f) (#f))
 
 ; btype
 (dwf f-mode "Addressin"   () 0 32 25 1 UINT (#f) (#f))
 (dwf f-cond "condition"   () 0 32 29 4 UINT (#f) (#f)) 
 
-; target
-;(dwf f-t25 "TARGET PC"    () 0 32 24 25 INT (#f) (#f))
-;(dwf f-t20 "TARGET REG"    () 0 32 19 20 INT (#f) (#f))
-
-(dwf f-pop25 "POP addr"    () 0 32 24 25 INT (#f) (#f))
+; address
 (df f-t25p 
 	"25 bit pc relative address word aligned" 
 	()
@@ -160,15 +167,41 @@
 	((value pc) (sra WI (sub WI value (and WI pc (const -4))) (const 2)))
 	((value pc) (add WI (sll WI value (const 2)) (and WI pc (const -4))))
 )
-
 (df f-t20r
 	"20 bit reg relative address word aligned"
-	(ABS-ADDR)
+	()
 	0 20 INT
 	((value pc) (sra WI (sub WI value (and WI pc (const -4))) (const 2)))
 	((value pc) (add WI (sll WI value (const 2)) (and WI pc (const -4))))
 )
-	
+
+; define-normal-operand
+(dnop rd "destination register" () h-gr f-rd)
+(dnop ra "source register a" () h-gr f-ra)
+(dnop rb "source register b" () h-gr f-rb)
+(dnop u20 "u20 long imm" () h-uint20 f-u20)
+(dnop i15 "i15 imm without shift" () h-int15 f-i15)
+(dnop m9  "i9 byte aligned memory"  () h-addr  f-mems)
+(dnop m12  "i12 byte aligned memory"  () h-addr  f-mem)
+; shifted by 2
+(dnop t25 "i25 word aligned" () h-iaddr f-t25p)
+(dnop t20 "i20 word aligned" () h-iaddr f-t20r)
+
+(define-operand (name hi18)
+	(comment "18 bit imm")
+	(attrs)
+	(type h-uint18)
+	(index f-u18) 
+	(handlers (parse "hi18"))
+)
+(define-operand (name lo14)
+	(comment "14 bit imm")
+	(attrs)
+	(type h-uint14)
+	(index f-u14) 
+	(handlers (parse "lo14"))
+)
+
 
 ;NOTE
 ;define-normal-insn-enum
@@ -210,7 +243,7 @@
 	("0" "1")
 )
 (define-normal-insn-enum insn-x 
-	"insn a enums" 
+	"insn x enums" 
 	() 
 	XXX_
 	f-x 
@@ -223,6 +256,21 @@
 	f-mode 
 	("0" "1")
 )
+
+(define-normal-insn-enum insn-xxxh
+	"insn xxxh enums" 
+	() 
+	XXXH_ 
+	f-xxxh 
+	("0" "1")
+)
+(define-normal-insn-enum insn-xxxl
+	"insn xxxl enums" 
+	() 
+	XXXL_ 
+	f-xxxl 
+	("0" "1")
+)
 (define-normal-insn-enum insn-cond
 	"insn cond enums"
 	()
@@ -231,18 +279,6 @@
 	(.map .str (.iota 16))
 )
 
-; define-normal-operand
-(dnop rd "destination register" () h-gr f-rd)
-(dnop ra "source register a" () h-gr f-ra)
-(dnop rb "source register b" () h-gr f-rb)
-(dnop u20 "unsigned 20 bit" () h-uint20 f-u20)
-(dnop i15 "signed 15 bit" () h-int15 f-i15)
-(dnop m9  "byte aligned 9 bit"  () h-addr  f-mems)
-(dnop m12  "byte aligned 12 bit"  () h-addr  f-mem)
-; shifted by 2
-(dnop t25 "word aligned 25 bit" (ABS-ADDR) h-iaddr f-t25p)
-(dnop t20 "word aligned 20 bit" () h-iaddr f-t20r)
-(dnop pop25 "pop addr 25 bit" () h-iaddr f-pop25)
 
 (define-pmacro (rtype name mnemonic opcode)
 	(begin
@@ -256,7 +292,6 @@
 		)
 	)
 )
-
 (define-pmacro (itype-lui name mnemonic opcode)
 	(begin
 		(dni name
@@ -281,38 +316,25 @@
 		)
 	)
 )
-(define-pmacro (itype name mnemonic opcode)
-	(begin
-		(dni name
-			(.str mnemonic " itype signed imm")
-			()
-			(.str mnemonic " $rd,$i15($ra)")
-			(+ TYPE_1 opcode rd ra i15)
-			()
-			()
-		)
-	)
-)
 (define-pmacro (itype-mem-u name mnemonic opcode)
 	(begin
 		(dni name
 			(.str mnemonic " itype u memory imm not shifted")
 			()
-			(.str mnemonic " $rd,$i15($ra)")
-			(+ TYPE_1 opcode rd ra U_1 S_0 A_0 i15)
+			(.str mnemonic " $rd,$m12($ra)")
+			(+ TYPE_1 opcode rd ra U_1 S_0 A_0 m12)
 			()
 			()
 		)
 	)
 )
-
 (define-pmacro (itype-mem name mnemonic opcode)
 	(begin
 		(dni name
 			(.str mnemonic " itype u memory imm not shifted")
 			()
-			(.str mnemonic " $rd,$i15($ra)")
-			(+ TYPE_1 opcode rd ra U_0 S_0 A_0 i15)
+			(.str mnemonic " $rd,$m12($ra)")
+			(+ TYPE_1 opcode rd ra U_0 S_0 A_0 m12)
 			()
 			()
 		)
@@ -325,19 +347,6 @@
 			()
 			(.str mnemonic " $t25")
 			(+ TYPE_2 cond MODE_0 t25)
-			()
-			()
-		)
-	)
-)
-
-(define-pmacro (btype-ret name mnemonic cond)
-	(begin
-		(dni name
-			(.str mnemonic " btype ret")
-			()
-			(.str mnemonic " $pop25")
-			(+ TYPE_2 cond MODE_0 pop25)
 			()
 			()
 		)
@@ -357,6 +366,24 @@
 	)
 )
 
+
+; instruction
+(dni lda-hi
+	("ldh hi 18 bit")
+	()
+	("ldh $rd,$hi18")
+	(+ TYPE_1 OP_8 rd XXXH_0 hi18)
+	()
+	()
+)
+(dni lda-lo
+	("ldl lo 14 bit")
+	()
+	("ldl $rd,$lo14")
+	(+ TYPE_1 OP_20 rd rd XXXL_0 lo14)
+	()
+	()
+)
 
 ; RTYPE
 (rtype add add OP_0)
@@ -426,5 +453,4 @@
 (btype-reg bugereg  buge COND_10)
 (btype-reg callreg  call COND_13)
 
-(btype-ret retpc   ret  COND_11)
-(btype-ret retipc  reti COND_12)
+(btype-pc retpc   ret  COND_11)
