@@ -59,7 +59,6 @@ static int read_insn
 /* -- disassembler routines inserted here.  */
 
 /* -- dis.c */
-/* disassembler print hack */
 #undef CGEN_SYNTAX_CHAR
 #define CGEN_SYNTAX_CHAR(c) ((c == ' ') ? '\t' : (unsigned char)c)
 /* -- */
@@ -95,17 +94,20 @@ sun32_cgen_print_operand (CGEN_CPU_DESC cd,
 
   switch (opindex)
     {
+    case SUN32_OPERAND_HI18 :
+      print_normal (cd, info, fields->f_u18, 0|(1<<CGEN_OPERAND_ABS_ADDR), pc, length);
+      break;
     case SUN32_OPERAND_I15 :
       print_normal (cd, info, fields->f_i15, 0|(1<<CGEN_OPERAND_SIGNED), pc, length);
+      break;
+    case SUN32_OPERAND_LO14 :
+      print_normal (cd, info, fields->f_u14, 0|(1<<CGEN_OPERAND_ABS_ADDR), pc, length);
       break;
     case SUN32_OPERAND_M12 :
       print_address (cd, info, fields->f_mem, 0|(1<<CGEN_OPERAND_ABS_ADDR), pc, length);
       break;
     case SUN32_OPERAND_M9 :
       print_address (cd, info, fields->f_mems, 0|(1<<CGEN_OPERAND_ABS_ADDR), pc, length);
-      break;
-    case SUN32_OPERAND_POP25 :
-      print_address (cd, info, fields->f_pop25, 0, pc, length);
       break;
     case SUN32_OPERAND_RA :
       print_keyword (cd, info, & sun32_cgen_opval_h_gr, fields->f_ra, 0);
@@ -117,10 +119,10 @@ sun32_cgen_print_operand (CGEN_CPU_DESC cd,
       print_keyword (cd, info, & sun32_cgen_opval_h_gr, fields->f_rd, 0);
       break;
     case SUN32_OPERAND_T20 :
-      print_address (cd, info, fields->f_t20r, 0|(1<<CGEN_OPERAND_ABS_ADDR), pc, length);
+      print_address (cd, info, fields->f_t20r, 0, pc, length);
       break;
     case SUN32_OPERAND_T25 :
-      print_address (cd, info, fields->f_t25p, 0|(1<<CGEN_OPERAND_ABS_ADDR), pc, length);
+      print_address (cd, info, fields->f_t25p, 0, pc, length);
       break;
     case SUN32_OPERAND_U20 :
       print_normal (cd, info, fields->f_u20, 0, pc, length);

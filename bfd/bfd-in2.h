@@ -6705,6 +6705,8 @@ assembler and not (currently) written to any object files.  */
 /* SUN32 relocations.  */
   BFD_RELOC_SUN32_PCREL_25,
   BFD_RELOC_SUN32_ABS_20,
+  BFD_RELOC_SUN32_HI_18,
+  BFD_RELOC_SUN32_LO_14,
   BFD_RELOC_UNUSED };
 
 typedef enum bfd_reloc_code_real bfd_reloc_code_real_type;

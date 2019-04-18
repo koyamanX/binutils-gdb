@@ -45,9 +45,9 @@ extern "C" {
 #define CGEN_MIN_INSN_SIZE 4
 
 /* Maximum size of any insn (in bytes).  */
-#define CGEN_MAX_INSN_SIZE 5
+#define CGEN_MAX_INSN_SIZE 4
 
-#define CGEN_INT_INSN_P 0
+#define CGEN_INT_INSN_P 1
 
 /* Maximum number of syntax elements in an instruction.  */
 #define CGEN_ACTUAL_MAX_SYNTAX_ELEMENTS 14
@@ -94,7 +94,7 @@ typedef enum insn_a {
   A_0, A_1
 } INSN_A;
 
-/* Enum declaration for insn a enums.  */
+/* Enum declaration for insn x enums.  */
 typedef enum insn_x {
   XXX_0
 } INSN_X;
@@ -103,6 +103,16 @@ typedef enum insn_x {
 typedef enum insn_mode {
   MODE_0, MODE_1
 } INSN_MODE;
+
+/* Enum declaration for insn xxxh enums.  */
+typedef enum insn_xxxh {
+  XXXH_0, XXXH_1
+} INSN_XXXH;
+
+/* Enum declaration for insn xxxl enums.  */
+typedef enum insn_xxxl {
+  XXXL_0, XXXL_1
+} INSN_XXXL;
 
 /* Enum declaration for insn cond enums.  */
 typedef enum insn_cond {
@@ -155,10 +165,11 @@ typedef enum cgen_ifld_attr {
 typedef enum ifield_type {
   SUN32_F_NIL, SUN32_F_ANYOF, SUN32_F_TYPE, SUN32_F_OP
  , SUN32_F_RD, SUN32_F_RA, SUN32_F_RB, SUN32_F_X
- , SUN32_F_MEMS, SUN32_F_SFT, SUN32_F_A, SUN32_F_S
- , SUN32_F_U, SUN32_F_MEM, SUN32_F_U20, SUN32_F_I15
- , SUN32_F_MODE, SUN32_F_COND, SUN32_F_POP25, SUN32_F_T25P
- , SUN32_F_T20R, SUN32_F_MAX
+ , SUN32_F_XXXH, SUN32_F_XXXL, SUN32_F_SFT, SUN32_F_A
+ , SUN32_F_S, SUN32_F_U, SUN32_F_MEMS, SUN32_F_MEM
+ , SUN32_F_U18, SUN32_F_U14, SUN32_F_U20, SUN32_F_I15
+ , SUN32_F_MODE, SUN32_F_COND, SUN32_F_T25P, SUN32_F_T20R
+ , SUN32_F_MAX
 } IFIELD_TYPE;
 
 #define MAX_IFLD ((int) SUN32_F_MAX)
@@ -184,9 +195,9 @@ typedef enum cgen_hw_attr {
 /* Enum declaration for sun32 hardware types.  */
 typedef enum cgen_hw_type {
   HW_H_MEMORY, HW_H_SINT, HW_H_UINT, HW_H_ADDR
- , HW_H_IADDR, HW_H_PC, HW_H_GR, HW_H_INT9
- , HW_H_INT12, HW_H_INT15, HW_H_INT25, HW_H_INT20
- , HW_H_UINT20, HW_MAX
+ , HW_H_IADDR, HW_H_PC, HW_H_GR, HW_H_INT12
+ , HW_H_INT15, HW_H_UINT20, HW_H_INT25, HW_H_INT20
+ , HW_H_UINT18, HW_H_UINT14, HW_MAX
 } CGEN_HW_TYPE;
 
 #define MAX_HW ((int) HW_MAX)
@@ -218,11 +229,12 @@ typedef enum cgen_operand_attr {
 typedef enum cgen_operand_type {
   SUN32_OPERAND_PC, SUN32_OPERAND_RD, SUN32_OPERAND_RA, SUN32_OPERAND_RB
  , SUN32_OPERAND_U20, SUN32_OPERAND_I15, SUN32_OPERAND_M9, SUN32_OPERAND_M12
- , SUN32_OPERAND_T25, SUN32_OPERAND_T20, SUN32_OPERAND_POP25, SUN32_OPERAND_MAX
+ , SUN32_OPERAND_T25, SUN32_OPERAND_T20, SUN32_OPERAND_HI18, SUN32_OPERAND_LO14
+ , SUN32_OPERAND_MAX
 } CGEN_OPERAND_TYPE;
 
 /* Number of operands types.  */
-#define MAX_OPERANDS 11
+#define MAX_OPERANDS 12
 
 /* Maximum number of operands referenced by any insn.  */
 #define MAX_OPERAND_INSTANCES 8

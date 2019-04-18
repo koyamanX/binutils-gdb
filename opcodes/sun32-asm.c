@@ -50,16 +50,65 @@ static const char * parse_insn_normal
 /* -- assembler routines inserted here.  */
 
 /* -- asm.c */
-//static const char * MISSING_CLOSING_PARENTHESIS = N_("missing `)'");
+static const char *MISSING_CLOSING_PARENTHESIS = N_("missing `)'");
 #define CGEN_VERBOSE_ASSEMBLER_ERRORS
-/*
-void opcodes_error_handler(char *fmt, ...) {
-	va_list ap;
-	va_start(ap, fmt);
-	fprintf (stderr, fmt, ap); fputc ('\n', stderr);
-	va_end(ap);
+
+/* Handle hi(). */
+static const char *
+parse_hi18 (CGEN_CPU_DESC cd, const char **strp,
+	int opindex, unsigned long *valuep)
+{
+	const char *errmsg;
+	enum cgen_parse_operand_result result_type;
+	bfd_vma value;
+
+	if (**strp == '#')
+		++*strp;
+
+	if (strncasecmp (*strp, "hi(", 3) == 0)
+	{
+		*strp += 3;
+		errmsg = cgen_parse_address (cd, strp, opindex, BFD_RELOC_SUN32_HI_18,
+					   & result_type, & value);
+		if (**strp != ')')
+			return MISSING_CLOSING_PARENTHESIS;
+		++*strp;
+		if (errmsg == NULL
+				&& result_type == CGEN_PARSE_OPERAND_RESULT_NUMBER)
+		{
+			value >>= 16;
+			value &= 0x0fff;
+		}
+		*valuep = value;
+		return errmsg;
+	}
+	return cgen_parse_unsigned_integer (cd, strp, opindex, valuep);
 }
-*/
+
+/* Handle lo(). */
+static const char *
+parse_lo14 (CGEN_CPU_DESC cd, const char **strp,
+	int opindex, unsigned long *valuep)
+{
+	puts("lo14");
+	const char *errmsg = NULL;
+	if(strncasecmp(*strp, "lo(", 3) == 0)
+	{
+		enum cgen_parse_operand_result result_type;
+		bfd_vma value;
+
+		*strp += 3;
+		errmsg = cgen_parse_address(cd, strp, opindex, BFD_RELOC_SUN32_LO_14,
+							&result_type, &value);
+
+		if(**strp != ')')
+			return MISSING_CLOSING_PARENTHESIS;
+		++*strp;
+		*valuep = value&0x3fff;
+		return errmsg;
+	}
+	return errmsg;
+}
 /* -- */
 
 const char * sun32_cgen_parse_operand
@@ -90,8 +139,14 @@ sun32_cgen_parse_operand (CGEN_CPU_DESC cd,
 
   switch (opindex)
     {
+    case SUN32_OPERAND_HI18 :
+      errmsg = parse_hi18 (cd, strp, SUN32_OPERAND_HI18, (unsigned long *) (& fields->f_u18));
+      break;
     case SUN32_OPERAND_I15 :
       errmsg = cgen_parse_signed_integer (cd, strp, SUN32_OPERAND_I15, (long *) (& fields->f_i15));
+      break;
+    case SUN32_OPERAND_LO14 :
+      errmsg = parse_lo14 (cd, strp, SUN32_OPERAND_LO14, (unsigned long *) (& fields->f_u14));
       break;
     case SUN32_OPERAND_M12 :
       {
@@ -105,13 +160,6 @@ sun32_cgen_parse_operand (CGEN_CPU_DESC cd,
         bfd_vma value = 0;
         errmsg = cgen_parse_address (cd, strp, SUN32_OPERAND_M9, 0, NULL,  & value);
         fields->f_mems = value;
-      }
-      break;
-    case SUN32_OPERAND_POP25 :
-      {
-        bfd_vma value = 0;
-        errmsg = cgen_parse_address (cd, strp, SUN32_OPERAND_POP25, 0, NULL,  & value);
-        fields->f_pop25 = value;
       }
       break;
     case SUN32_OPERAND_RA :

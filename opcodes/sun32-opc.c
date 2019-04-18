@@ -48,6 +48,14 @@ static const CGEN_IFMT ifmt_empty ATTRIBUTE_UNUSED = {
   0, 0, 0x0, { { 0 } }
 };
 
+static const CGEN_IFMT ifmt_lda_hi ATTRIBUTE_UNUSED = {
+  32, 32, 0xfe0c0000, { { F (F_TYPE) }, { F (F_OP) }, { F (F_RD) }, { F (F_XXXH) }, { F (F_U18) }, { 0 } }
+};
+
+static const CGEN_IFMT ifmt_lda_lo ATTRIBUTE_UNUSED = {
+  32, 32, 0xfe008000, { { F (F_TYPE) }, { F (F_OP) }, { F (F_RD) }, { F (F_RD) }, { F (F_XXXL) }, { F (F_U14) }, { 0 } }
+};
+
 static const CGEN_IFMT ifmt_add ATTRIBUTE_UNUSED = {
   32, 32, 0xfe0003ff, { { F (F_TYPE) }, { F (F_OP) }, { F (F_RD) }, { F (F_RA) }, { F (F_RB) }, { F (F_X) }, { 0 } }
 };
@@ -61,7 +69,7 @@ static const CGEN_IFMT ifmt_lui ATTRIBUTE_UNUSED = {
 };
 
 static const CGEN_IFMT ifmt_lw ATTRIBUTE_UNUSED = {
-  32, 35, 0xfe007000, { { F (F_TYPE) }, { F (F_OP) }, { F (F_RD) }, { F (F_RA) }, { F (F_U) }, { F (F_I15) }, { F (F_S) }, { F (F_A) }, { 0 } }
+  32, 32, 0xfe007000, { { F (F_TYPE) }, { F (F_OP) }, { F (F_RD) }, { F (F_RA) }, { F (F_U) }, { F (F_S) }, { F (F_A) }, { F (F_MEM) }, { 0 } }
 };
 
 static const CGEN_IFMT ifmt_bnepc ATTRIBUTE_UNUSED = {
@@ -70,10 +78,6 @@ static const CGEN_IFMT ifmt_bnepc ATTRIBUTE_UNUSED = {
 
 static const CGEN_IFMT ifmt_bnereg ATTRIBUTE_UNUSED = {
   32, 32, 0xfe000000, { { F (F_TYPE) }, { F (F_COND) }, { F (F_MODE) }, { F (F_RA) }, { F (F_T20R) }, { 0 } }
-};
-
-static const CGEN_IFMT ifmt_retpc ATTRIBUTE_UNUSED = {
-  32, 32, 0xfe000000, { { F (F_TYPE) }, { F (F_COND) }, { F (F_MODE) }, { F (F_POP25) }, { 0 } }
 };
 
 #undef F
@@ -91,6 +95,18 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
      A `num' value of zero is thus invalid.
      Also, the special `invalid' insn resides here.  */
   { { 0, 0, 0, 0 }, {{0}}, 0, {0}},
+/* ldh $rd,$hi18 */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (HI18), 0 } },
+    & ifmt_lda_hi, { 0x50000000 }
+  },
+/* ldl $rd,$lo14 */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (LO14), 0 } },
+    & ifmt_lda_lo, { 0x68000000 }
+  },
 /* add $rd,$ra,$rb */
   {
     { 0, 0, 0, 0 },
@@ -253,40 +269,40 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
     { { MNEM, ' ', OP (RD), ',', OP (U20), 0 } },
     & ifmt_lui, { 0x50000000 }
   },
-/* lw $rd,$i15($ra) */
+/* lw $rd,$m12($ra) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
+    { { MNEM, ' ', OP (RD), ',', OP (M12), '(', OP (RA), ')', 0 } },
     & ifmt_lw, { 0x72000000 }
   },
-/* lh $rd,$i15($ra) */
+/* lh $rd,$m12($ra) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
+    { { MNEM, ' ', OP (RD), ',', OP (M12), '(', OP (RA), ')', 0 } },
     & ifmt_lw, { 0x74000000 }
   },
-/* lb $rd,$i15($ra) */
+/* lb $rd,$m12($ra) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
+    { { MNEM, ' ', OP (RD), ',', OP (M12), '(', OP (RA), ')', 0 } },
     & ifmt_lw, { 0x76000000 }
   },
-/* sw $rd,$i15($ra) */
+/* sw $rd,$m12($ra) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
+    { { MNEM, ' ', OP (RD), ',', OP (M12), '(', OP (RA), ')', 0 } },
     & ifmt_lw, { 0x7a000000 }
   },
-/* sh $rd,$i15($ra) */
+/* sh $rd,$m12($ra) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
+    { { MNEM, ' ', OP (RD), ',', OP (M12), '(', OP (RA), ')', 0 } },
     & ifmt_lw, { 0x7c000000 }
   },
-/* sb $rd,$i15($ra) */
+/* sb $rd,$m12($ra) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
+    { { MNEM, ' ', OP (RD), ',', OP (M12), '(', OP (RA), ')', 0 } },
     & ifmt_lw, { 0x7e000000 }
   },
 /* bne $t25 */
@@ -433,17 +449,11 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
     { { MNEM, ' ', OP (T20), '(', OP (RA), ')', 0 } },
     & ifmt_bnereg, { 0xb6000000 }
   },
-/* ret $pop25 */
+/* ret $t25 */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (POP25), 0 } },
-    & ifmt_retpc, { 0xac000000 }
-  },
-/* reti $pop25 */
-  {
-    { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (POP25), 0 } },
-    & ifmt_retpc, { 0xb0000000 }
+    { { MNEM, ' ', OP (T25), 0 } },
+    & ifmt_bnepc, { 0xac000000 }
   },
 };
 

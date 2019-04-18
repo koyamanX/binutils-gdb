@@ -573,17 +573,20 @@ sun32_cgen_insert_operand (CGEN_CPU_DESC cd,
 
   switch (opindex)
     {
+    case SUN32_OPERAND_HI18 :
+      errmsg = insert_normal (cd, fields->f_u18, 0|(1<<CGEN_IFLD_ABS_ADDR), 0, 17, 18, 32, total_length, buffer);
+      break;
     case SUN32_OPERAND_I15 :
       errmsg = insert_normal (cd, fields->f_i15, 0|(1<<CGEN_IFLD_SIGNED), 0, 14, 15, 32, total_length, buffer);
+      break;
+    case SUN32_OPERAND_LO14 :
+      errmsg = insert_normal (cd, fields->f_u14, 0|(1<<CGEN_IFLD_ABS_ADDR), 0, 13, 14, 32, total_length, buffer);
       break;
     case SUN32_OPERAND_M12 :
       errmsg = insert_normal (cd, fields->f_mem, 0|(1<<CGEN_IFLD_SIGNED)|(1<<CGEN_IFLD_ABS_ADDR), 0, 11, 12, 32, total_length, buffer);
       break;
     case SUN32_OPERAND_M9 :
       errmsg = insert_normal (cd, fields->f_mems, 0|(1<<CGEN_IFLD_SIGNED)|(1<<CGEN_IFLD_ABS_ADDR), 0, 8, 9, 32, total_length, buffer);
-      break;
-    case SUN32_OPERAND_POP25 :
-      errmsg = insert_normal (cd, fields->f_pop25, 0|(1<<CGEN_IFLD_SIGNED), 0, 24, 25, 32, total_length, buffer);
       break;
     case SUN32_OPERAND_RA :
       errmsg = insert_normal (cd, fields->f_ra, 0, 0, 19, 5, 32, total_length, buffer);
@@ -598,7 +601,7 @@ sun32_cgen_insert_operand (CGEN_CPU_DESC cd,
       {
         long value = fields->f_t20r;
         value = ((SI) (((value) - (((pc) & (-4))))) >> (2));
-        errmsg = insert_normal (cd, value, 0|(1<<CGEN_IFLD_SIGNED)|(1<<CGEN_IFLD_ABS_ADDR), 0, 0, 20, 32, total_length, buffer);
+        errmsg = insert_normal (cd, value, 0|(1<<CGEN_IFLD_SIGNED), 0, 0, 20, 32, total_length, buffer);
       }
       break;
     case SUN32_OPERAND_T25 :
@@ -655,17 +658,20 @@ sun32_cgen_extract_operand (CGEN_CPU_DESC cd,
 
   switch (opindex)
     {
+    case SUN32_OPERAND_HI18 :
+      length = extract_normal (cd, ex_info, insn_value, 0|(1<<CGEN_IFLD_ABS_ADDR), 0, 17, 18, 32, total_length, pc, & fields->f_u18);
+      break;
     case SUN32_OPERAND_I15 :
       length = extract_normal (cd, ex_info, insn_value, 0|(1<<CGEN_IFLD_SIGNED), 0, 14, 15, 32, total_length, pc, & fields->f_i15);
+      break;
+    case SUN32_OPERAND_LO14 :
+      length = extract_normal (cd, ex_info, insn_value, 0|(1<<CGEN_IFLD_ABS_ADDR), 0, 13, 14, 32, total_length, pc, & fields->f_u14);
       break;
     case SUN32_OPERAND_M12 :
       length = extract_normal (cd, ex_info, insn_value, 0|(1<<CGEN_IFLD_SIGNED)|(1<<CGEN_IFLD_ABS_ADDR), 0, 11, 12, 32, total_length, pc, & fields->f_mem);
       break;
     case SUN32_OPERAND_M9 :
       length = extract_normal (cd, ex_info, insn_value, 0|(1<<CGEN_IFLD_SIGNED)|(1<<CGEN_IFLD_ABS_ADDR), 0, 8, 9, 32, total_length, pc, & fields->f_mems);
-      break;
-    case SUN32_OPERAND_POP25 :
-      length = extract_normal (cd, ex_info, insn_value, 0|(1<<CGEN_IFLD_SIGNED), 0, 24, 25, 32, total_length, pc, & fields->f_pop25);
       break;
     case SUN32_OPERAND_RA :
       length = extract_normal (cd, ex_info, insn_value, 0, 0, 19, 5, 32, total_length, pc, & fields->f_ra);
@@ -679,7 +685,7 @@ sun32_cgen_extract_operand (CGEN_CPU_DESC cd,
     case SUN32_OPERAND_T20 :
       {
         long value;
-        length = extract_normal (cd, ex_info, insn_value, 0|(1<<CGEN_IFLD_SIGNED)|(1<<CGEN_IFLD_ABS_ADDR), 0, 0, 20, 32, total_length, pc, & value);
+        length = extract_normal (cd, ex_info, insn_value, 0|(1<<CGEN_IFLD_SIGNED), 0, 0, 20, 32, total_length, pc, & value);
         value = ((((value) << (2))) + (((pc) & (-4))));
         fields->f_t20r = value;
       }
@@ -734,17 +740,20 @@ sun32_cgen_get_int_operand (CGEN_CPU_DESC cd ATTRIBUTE_UNUSED,
 
   switch (opindex)
     {
+    case SUN32_OPERAND_HI18 :
+      value = fields->f_u18;
+      break;
     case SUN32_OPERAND_I15 :
       value = fields->f_i15;
+      break;
+    case SUN32_OPERAND_LO14 :
+      value = fields->f_u14;
       break;
     case SUN32_OPERAND_M12 :
       value = fields->f_mem;
       break;
     case SUN32_OPERAND_M9 :
       value = fields->f_mems;
-      break;
-    case SUN32_OPERAND_POP25 :
-      value = fields->f_pop25;
       break;
     case SUN32_OPERAND_RA :
       value = fields->f_ra;
@@ -785,17 +794,20 @@ sun32_cgen_get_vma_operand (CGEN_CPU_DESC cd ATTRIBUTE_UNUSED,
 
   switch (opindex)
     {
+    case SUN32_OPERAND_HI18 :
+      value = fields->f_u18;
+      break;
     case SUN32_OPERAND_I15 :
       value = fields->f_i15;
+      break;
+    case SUN32_OPERAND_LO14 :
+      value = fields->f_u14;
       break;
     case SUN32_OPERAND_M12 :
       value = fields->f_mem;
       break;
     case SUN32_OPERAND_M9 :
       value = fields->f_mems;
-      break;
-    case SUN32_OPERAND_POP25 :
-      value = fields->f_pop25;
       break;
     case SUN32_OPERAND_RA :
       value = fields->f_ra;
@@ -843,17 +855,20 @@ sun32_cgen_set_int_operand (CGEN_CPU_DESC cd ATTRIBUTE_UNUSED,
 {
   switch (opindex)
     {
+    case SUN32_OPERAND_HI18 :
+      fields->f_u18 = value;
+      break;
     case SUN32_OPERAND_I15 :
       fields->f_i15 = value;
+      break;
+    case SUN32_OPERAND_LO14 :
+      fields->f_u14 = value;
       break;
     case SUN32_OPERAND_M12 :
       fields->f_mem = value;
       break;
     case SUN32_OPERAND_M9 :
       fields->f_mems = value;
-      break;
-    case SUN32_OPERAND_POP25 :
-      fields->f_pop25 = value;
       break;
     case SUN32_OPERAND_RA :
       fields->f_ra = value;
@@ -891,17 +906,20 @@ sun32_cgen_set_vma_operand (CGEN_CPU_DESC cd ATTRIBUTE_UNUSED,
 {
   switch (opindex)
     {
+    case SUN32_OPERAND_HI18 :
+      fields->f_u18 = value;
+      break;
     case SUN32_OPERAND_I15 :
       fields->f_i15 = value;
+      break;
+    case SUN32_OPERAND_LO14 :
+      fields->f_u14 = value;
       break;
     case SUN32_OPERAND_M12 :
       fields->f_mem = value;
       break;
     case SUN32_OPERAND_M9 :
       fields->f_mems = value;
-      break;
-    case SUN32_OPERAND_POP25 :
-      fields->f_pop25 = value;
       break;
     case SUN32_OPERAND_RA :
       fields->f_ra = value;

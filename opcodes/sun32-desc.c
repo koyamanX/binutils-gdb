@@ -114,7 +114,7 @@ const CGEN_ATTR_TABLE sun32_cgen_insn_attr_table[] =
 /* Instruction set variants.  */
 
 static const CGEN_ISA sun32_cgen_isa_table[] = {
-  { "sun32", 32, 32, 32, 35 },
+  { "sun32", 32, 32, 32, 32 },
   { 0, 0, 0, 0, 0 }
 };
 
@@ -184,12 +184,13 @@ const CGEN_HW_ENTRY sun32_cgen_hw_table[] =
   { "h-iaddr", HW_H_IADDR, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } },
   { "h-pc", HW_H_PC, CGEN_ASM_NONE, 0, { 0|A(PC), { { { (1<<MACH_BASE), 0 } } } } },
   { "h-gr", HW_H_GR, CGEN_ASM_KEYWORD, (PTR) & sun32_cgen_opval_h_gr, { 0, { { { (1<<MACH_BASE), 0 } } } } },
-  { "h-int9", HW_H_INT9, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } },
   { "h-int12", HW_H_INT12, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } },
   { "h-int15", HW_H_INT15, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } },
+  { "h-uint20", HW_H_UINT20, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } },
   { "h-int25", HW_H_INT25, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } },
   { "h-int20", HW_H_INT20, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } },
-  { "h-uint20", HW_H_UINT20, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } },
+  { "h-uint18", HW_H_UINT18, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } },
+  { "h-uint14", HW_H_UINT14, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } },
   { 0, 0, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } }
 };
 
@@ -210,19 +211,22 @@ const CGEN_IFLD sun32_cgen_ifld_table[] =
   { SUN32_F_RA, "f-ra", 0, 32, 19, 5, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_RB, "f-rb", 0, 32, 14, 5, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_X, "f-x", 0, 32, 9, 10, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
-  { SUN32_F_MEMS, "f-mems", 0, 32, 8, 9, { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
+  { SUN32_F_XXXH, "f-xxxh", 0, 32, 19, 2, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
+  { SUN32_F_XXXL, "f-xxxl", 0, 32, 15, 1, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_SFT, "f-sft", 0, 32, 11, 3, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_A, "f-a", 0, 32, 12, 1, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_S, "f-s", 0, 32, 13, 1, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_U, "f-u", 0, 32, 14, 1, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
+  { SUN32_F_MEMS, "f-mems", 0, 32, 8, 9, { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_MEM, "f-mem", 0, 32, 11, 12, { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
+  { SUN32_F_U18, "f-u18", 0, 32, 17, 18, { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
+  { SUN32_F_U14, "f-u14", 0, 32, 13, 14, { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_U20, "f-u20", 0, 32, 19, 20, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_I15, "f-i15", 0, 32, 14, 15, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_MODE, "f-mode", 0, 32, 25, 1, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_COND, "f-cond", 0, 32, 29, 4, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
-  { SUN32_F_POP25, "f-pop25", 0, 32, 24, 25, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_T25P, "f-t25p", 0, 32, 0, 25, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
-  { SUN32_F_T20R, "f-t20r", 0, 32, 0, 20, { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
+  { SUN32_F_T20R, "f-t20r", 0, 32, 0, 20, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { 0, 0, 0, 0, 0, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } }
 };
 
@@ -260,34 +264,38 @@ const CGEN_OPERAND sun32_cgen_operand_table[] =
   { "rb", SUN32_OPERAND_RB, HW_H_GR, 14, 5,
     { 0, { (const PTR) &sun32_cgen_ifld_table[SUN32_F_RB] } },
     { 0, { { { (1<<MACH_BASE), 0 } } } }  },
-/* u20: unsigned 20 bit */
+/* u20: u20 long imm */
   { "u20", SUN32_OPERAND_U20, HW_H_UINT20, 19, 20,
     { 0, { (const PTR) &sun32_cgen_ifld_table[SUN32_F_U20] } },
     { 0, { { { (1<<MACH_BASE), 0 } } } }  },
-/* i15: signed 15 bit */
+/* i15: i15 imm without shift */
   { "i15", SUN32_OPERAND_I15, HW_H_INT15, 14, 15,
     { 0, { (const PTR) &sun32_cgen_ifld_table[SUN32_F_I15] } },
     { 0, { { { (1<<MACH_BASE), 0 } } } }  },
-/* m9: byte aligned 9 bit */
+/* m9: i9 byte aligned memory */
   { "m9", SUN32_OPERAND_M9, HW_H_ADDR, 8, 9,
     { 0, { (const PTR) &sun32_cgen_ifld_table[SUN32_F_MEMS] } },
     { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
-/* m12: byte aligned 12 bit */
+/* m12: i12 byte aligned memory */
   { "m12", SUN32_OPERAND_M12, HW_H_ADDR, 11, 12,
     { 0, { (const PTR) &sun32_cgen_ifld_table[SUN32_F_MEM] } },
     { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
-/* t25: word aligned 25 bit */
+/* t25: i25 word aligned */
   { "t25", SUN32_OPERAND_T25, HW_H_IADDR, 0, 25,
     { 0, { (const PTR) &sun32_cgen_ifld_table[SUN32_F_T25P] } },
-    { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
-/* t20: word aligned 20 bit */
+    { 0, { { { (1<<MACH_BASE), 0 } } } }  },
+/* t20: i20 word aligned */
   { "t20", SUN32_OPERAND_T20, HW_H_IADDR, 0, 20,
     { 0, { (const PTR) &sun32_cgen_ifld_table[SUN32_F_T20R] } },
-    { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
-/* pop25: pop addr 25 bit */
-  { "pop25", SUN32_OPERAND_POP25, HW_H_IADDR, 24, 25,
-    { 0, { (const PTR) &sun32_cgen_ifld_table[SUN32_F_POP25] } },
     { 0, { { { (1<<MACH_BASE), 0 } } } }  },
+/* hi18: 18 bit imm */
+  { "hi18", SUN32_OPERAND_HI18, HW_H_UINT18, 17, 18,
+    { 0, { (const PTR) &sun32_cgen_ifld_table[SUN32_F_U18] } },
+    { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
+/* lo14: 14 bit imm */
+  { "lo14", SUN32_OPERAND_LO14, HW_H_UINT14, 13, 14,
+    { 0, { (const PTR) &sun32_cgen_ifld_table[SUN32_F_U14] } },
+    { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
 /* sentinel */
   { 0, 0, 0, 0, 0,
     { 0, { (const PTR) 0 } },
@@ -308,6 +316,16 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
      A `num' value of zero is thus invalid.
      Also, the special `invalid' insn resides here.  */
   { 0, 0, 0, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } },
+/* ldh $rd,$hi18 */
+  {
+    SUN32_INSN_LDA_HI, "lda-hi", "ldh", 32,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* ldl $rd,$lo14 */
+  {
+    SUN32_INSN_LDA_LO, "lda-lo", "ldl", 32,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
 /* add $rd,$ra,$rb */
   {
     SUN32_INSN_ADD, "add", "add", 32,
@@ -443,34 +461,34 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
     SUN32_INSN_LUI, "lui", "lui", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* lw $rd,$i15($ra) */
+/* lw $rd,$m12($ra) */
   {
-    SUN32_INSN_LW, "lw", "lw", 35,
+    SUN32_INSN_LW, "lw", "lw", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* lh $rd,$i15($ra) */
+/* lh $rd,$m12($ra) */
   {
-    SUN32_INSN_LH, "lh", "lh", 35,
+    SUN32_INSN_LH, "lh", "lh", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* lb $rd,$i15($ra) */
+/* lb $rd,$m12($ra) */
   {
-    SUN32_INSN_LB, "lb", "lb", 35,
+    SUN32_INSN_LB, "lb", "lb", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* sw $rd,$i15($ra) */
+/* sw $rd,$m12($ra) */
   {
-    SUN32_INSN_SW, "sw", "sw", 35,
+    SUN32_INSN_SW, "sw", "sw", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* sh $rd,$i15($ra) */
+/* sh $rd,$m12($ra) */
   {
-    SUN32_INSN_SH, "sh", "sh", 35,
+    SUN32_INSN_SH, "sh", "sh", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* sb $rd,$i15($ra) */
+/* sb $rd,$m12($ra) */
   {
-    SUN32_INSN_SB, "sb", "sb", 35,
+    SUN32_INSN_SB, "sb", "sb", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
 /* bne $t25 */
@@ -593,14 +611,9 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
     SUN32_INSN_CALLREG, "callreg", "call", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* ret $pop25 */
+/* ret $t25 */
   {
     SUN32_INSN_RETPC, "retpc", "ret", 32,
-    { 0, { { { (1<<MACH_BASE), 0 } } } }
-  },
-/* reti $pop25 */
-  {
-    SUN32_INSN_RETIPC, "retipc", "reti", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
 };
