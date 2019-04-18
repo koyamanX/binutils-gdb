@@ -39,6 +39,8 @@ static const struct sun32_reloc_map sun32_reloc_map[R_SUN32_max] =
 	{BFD_RELOC_NONE,			R_SUN32_NONE},
 	{BFD_RELOC_32,				R_SUN32_32},
 	{BFD_RELOC_SUN32_PCREL_25,	R_SUN32_PCREL_25},
+	{BFD_RELOC_SUN32_HI_18,		R_SUN32_HI_18},
+	{BFD_RELOC_SUN32_LO_14,		R_SUN32_LO_14},
 	//{BFD_RELOC_SUN32_ABS_20,	R_SUN32_ABS_20},
 };
 
@@ -83,6 +85,32 @@ static reloc_howto_type sun32_elf_howto_table[] =
 		0x00000000,				/* src_mask */
 		0x01ffffff,				/* dst_mask */
 		TRUE),					/* pcrel_offset */
+	HOWTO (R_SUN32_HI_18,		/* type */
+		14,						/* rightshift */
+		2,						/* size */
+		18,						/* bitsize */
+		FALSE,					/* pc_relative */
+		0,						/* bitpos */
+		complain_overflow_signed,	/* complain_on_overflow */
+		bfd_elf_generic_reloc,	/* special_function */
+		"R_SUN32_HI_18",		/* name */
+		FALSE,					/* partial_inplace */
+		0x00000000,				/* src_mask */
+		0x0003ffff,				/* dst_mask */
+		FALSE),					/* pcrel_offset */
+	HOWTO (R_SUN32_LO_14,		/* type */
+		0,						/* rightshift */
+		2,						/* size */
+		14,						/* bitsize */
+		FALSE,					/* pc_relative */
+		0,						/* bitpos */
+		complain_overflow_signed,	/* complain_on_overflow */
+		bfd_elf_generic_reloc,	/* special_function */
+		"R_SUN32_LO_14",		/* name */
+		FALSE,					/* partial_inplace */
+		0x00000000,				/* src_mask */
+		0x00003fff,				/* dst_mask */
+		FALSE),					/* pcrel_offset */
 };
 
 /* Retrieve a howto ptr using a BFD reloc_code. */
@@ -185,8 +213,16 @@ sun32_elf_final_link_relocate (reloc_howto_type *howto,
 {
 	bfd_reloc_status_type r = bfd_reloc_ok;
 	bfd_vma x;
-	x = 0; x++;
 	switch(howto->type) {
+		case R_SUN32_HI_18:
+		case R_SUN32_LO_14:
+			contents += offset;
+			Rvalue += addend;
+			Rvalue = (Rvalue >> howto->rightshift) & howto->dst_mask;
+			x = bfd_get_32 (input_bfd, contents);
+			x = (x & ~howto->dst_mask) | Rvalue;
+			bfd_put_32 (input_bfd, x, contents);
+			break;
 		default:
 			r = _bfd_final_link_relocate (howto, input_bfd, input_section,
 			contents, offset,

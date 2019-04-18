@@ -191,6 +191,10 @@ md_cgen_lookup_reloc (const CGEN_INSN *    insn ATTRIBUTE_UNUSED,
 		case SUN32_OPERAND_T25:
 			fixP->fx_pcrel = 1;
 			return BFD_RELOC_SUN32_PCREL_25;
+		case SUN32_OPERAND_HI18:
+			return BFD_RELOC_SUN32_HI_18;
+		case SUN32_OPERAND_LO14:
+			return BFD_RELOC_SUN32_LO_14;
 			/*
 		case SUN32_OPERAND_T20:
 			return BFD_RELOC_SUN32_ABS_20;

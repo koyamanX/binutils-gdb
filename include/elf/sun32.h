@@ -28,6 +28,7 @@ START_RELOC_NUMBERS(elf_sun32_reloc_type)
   RELOC_NUMBER (R_SUN32_NONE,           0)
   RELOC_NUMBER (R_SUN32_32,             1)
   RELOC_NUMBER (R_SUN32_PCREL_25,       2)
- // RELOC_NUMBER (R_SUN32_ABS_20,         3)
+  RELOC_NUMBER (R_SUN32_HI_18,       3)
+  RELOC_NUMBER (R_SUN32_LO_14,       4)
 END_RELOC_NUMBERS(R_SUN32_max)
 #endif
