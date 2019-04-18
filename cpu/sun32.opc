@@ -67,7 +67,6 @@ static const char *
 parse_lo14 (CGEN_CPU_DESC cd, const char **strp,
 	int opindex, unsigned long *valuep)
 {
-	puts("lo14");
 	const char *errmsg = NULL;
 	if(strncasecmp(*strp, "lo(", 3) == 0)
 	{
