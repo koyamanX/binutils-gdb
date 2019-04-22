@@ -53,7 +53,7 @@ static const CGEN_IFMT ifmt_lda_hi ATTRIBUTE_UNUSED = {
 };
 
 static const CGEN_IFMT ifmt_lda_lo ATTRIBUTE_UNUSED = {
-  32, 32, 0xfe008000, { { F (F_TYPE) }, { F (F_OP) }, { F (F_RD) }, { F (F_RD) }, { F (F_XXXL) }, { F (F_U14) }, { 0 } }
+  32, 32, 0xfe008000, { { F (F_TYPE) }, { F (F_OP) }, { F (F_RD) }, { F (F_RA) }, { F (F_XXXL) }, { F (F_U14) }, { 0 } }
 };
 
 static const CGEN_IFMT ifmt_add ATTRIBUTE_UNUSED = {
@@ -101,10 +101,10 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
     { { MNEM, ' ', OP (RD), ',', OP (HI18), 0 } },
     & ifmt_lda_hi, { 0x50000000 }
   },
-/* ldl $rd,$lo14 */
+/* ldl $rd,$ra,$lo14 */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (LO14), 0 } },
+    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (LO14), 0 } },
     & ifmt_lda_lo, { 0x68000000 }
   },
 /* add $rd,$ra,$rb */

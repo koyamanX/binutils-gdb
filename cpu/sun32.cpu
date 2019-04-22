@@ -379,8 +379,8 @@
 (dni lda-lo
 	("ldl lo 14 bit")
 	()
-	("ldl $rd,$lo14")
-	(+ TYPE_1 OP_20 rd rd XXXL_0 lo14)
+	("ldl $rd,$ra,$lo14")
+	(+ TYPE_1 OP_20 rd ra XXXL_0 lo14)
 	()
 	()
 )

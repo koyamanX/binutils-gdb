@@ -321,7 +321,7 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
     SUN32_INSN_LDA_HI, "lda-hi", "ldh", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* ldl $rd,$lo14 */
+/* ldl $rd,$ra,$lo14 */
   {
     SUN32_INSN_LDA_LO, "lda-lo", "ldl", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
