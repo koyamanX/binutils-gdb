@@ -41,7 +41,7 @@ static const struct sun32_reloc_map sun32_reloc_map[R_SUN32_max] =
 	{BFD_RELOC_SUN32_PCREL_25,	R_SUN32_PCREL_25},
 	{BFD_RELOC_SUN32_HI_18,		R_SUN32_HI_18},
 	{BFD_RELOC_SUN32_LO_14,		R_SUN32_LO_14},
-	//{BFD_RELOC_SUN32_ABS_20,	R_SUN32_ABS_20},
+	{BFD_RELOC_SUN32_ABS_20,	R_SUN32_ABS_20},
 };
 
 static reloc_howto_type sun32_elf_howto_table[] = 
@@ -111,6 +111,19 @@ static reloc_howto_type sun32_elf_howto_table[] =
 		0x00000000,				/* src_mask */
 		0x00003fff,				/* dst_mask */
 		FALSE),					/* pcrel_offset */
+	HOWTO (R_SUN32_ABS_20,  	/* type */
+		2,						/* rightshift */
+		2,						/* size */
+		20,						/* bitsize */
+		FALSE,					/* pc_relative */
+		0,						/* bitpos */
+		complain_overflow_signed,	/* complain_on_overflow */
+		bfd_elf_generic_reloc,	/* special_function */
+		"R_SUN32_ABS_20",		/* name */
+		FALSE,					/* partial_inplace */
+		0x00000000,				/* src_mask */
+		0x000fffff,				/* dst_mask */
+		FALSE),	
 };
 
 /* Retrieve a howto ptr using a BFD reloc_code. */

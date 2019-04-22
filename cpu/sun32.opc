@@ -53,8 +53,8 @@ parse_hi18 (CGEN_CPU_DESC cd, const char **strp,
 		if (errmsg == NULL
 				&& result_type == CGEN_PARSE_OPERAND_RESULT_NUMBER)
 		{
-			value >>= 16;
-			value &= 0x0fff;
+			value >>= 14;
+			value &= 0x0003ffff;
 		}
 		*valuep = value;
 		return errmsg;
