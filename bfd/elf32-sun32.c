@@ -246,7 +246,7 @@ sun32_elf_final_link_relocate (reloc_howto_type *howto,
 				pc = pc >> 2;
 				pc = -1 * pc;
 			}
-			Rvalue = (Rvalue + pc - 4) & howto->dst_mask;
+			Rvalue = (Rvalue + pc - 1) & howto->dst_mask;
 			x = (x & ~howto->dst_mask) | Rvalue;
 			bfd_put_32 (input_bfd, x, contents);
 			break;
@@ -255,7 +255,7 @@ sun32_elf_final_link_relocate (reloc_howto_type *howto,
 			Rvalue += addend;
 			Rvalue = (Rvalue >> howto->rightshift) & howto->dst_mask;
 			x = bfd_get_32 (input_bfd, contents);
-			Rvalue = (Rvalue - 4) & howto->dst_mask;
+			Rvalue = (Rvalue - 1) & howto->dst_mask;
 			x = (x & ~howto->dst_mask) | Rvalue;
 			bfd_put_32 (input_bfd, x, contents);
 			break;
