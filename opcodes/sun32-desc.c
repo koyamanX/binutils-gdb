@@ -225,8 +225,8 @@ const CGEN_IFLD sun32_cgen_ifld_table[] =
   { SUN32_F_I15, "f-i15", 0, 32, 14, 15, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_MODE, "f-mode", 0, 32, 25, 1, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_COND, "f-cond", 0, 32, 29, 4, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
-  { SUN32_F_T25P, "f-t25p", 0, 32, 0, 25, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
-  { SUN32_F_T20R, "f-t20r", 0, 32, 0, 20, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
+  { SUN32_F_T25P, "f-t25p", 0, 32, 24, 25, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
+  { SUN32_F_T20R, "f-t20r", 0, 32, 19, 20, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { 0, 0, 0, 0, 0, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } }
 };
 
@@ -281,11 +281,11 @@ const CGEN_OPERAND sun32_cgen_operand_table[] =
     { 0, { (const PTR) &sun32_cgen_ifld_table[SUN32_F_MEM] } },
     { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
 /* t25: i25 word aligned */
-  { "t25", SUN32_OPERAND_T25, HW_H_IADDR, 0, 25,
+  { "t25", SUN32_OPERAND_T25, HW_H_IADDR, 24, 25,
     { 0, { (const PTR) &sun32_cgen_ifld_table[SUN32_F_T25P] } },
     { 0, { { { (1<<MACH_BASE), 0 } } } }  },
 /* t20: i20 word aligned */
-  { "t20", SUN32_OPERAND_T20, HW_H_IADDR, 0, 20,
+  { "t20", SUN32_OPERAND_T20, HW_H_IADDR, 19, 20,
     { 0, { (const PTR) &sun32_cgen_ifld_table[SUN32_F_T20R] } },
     { 0, { { { (1<<MACH_BASE), 0 } } } }  },
 /* hi18: 18 bit imm */

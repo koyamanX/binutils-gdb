@@ -158,22 +158,8 @@
 ; btype
 (dwf f-mode "Addressin"   () 0 32 25 1 UINT (#f) (#f))
 (dwf f-cond "condition"   () 0 32 29 4 UINT (#f) (#f)) 
-
-; address
-(df f-t25p 
-	"25 bit pc relative address word aligned" 
-	()
-	0 25 INT
-	((value pc) (sra WI (sub WI value (and WI pc (const -4))) (const 2)))
-	((value pc) (add WI (sll WI value (const 2)) (and WI pc (const -4))))
-)
-(df f-t20r
-	"20 bit reg relative address word aligned"
-	()
-	0 20 INT
-	((value pc) (sra WI (sub WI value (and WI pc (const -4))) (const 2)))
-	((value pc) (add WI (sll WI value (const 2)) (and WI pc (const -4))))
-)
+(dwf f-t25p "" () 0 32 24 25 INT (#f) (#f))
+(dwf f-t20r "" () 0 32 19 20 INT (#f) (#f))
 
 ; define-normal-operand
 (dnop rd "destination register" () h-gr f-rd)

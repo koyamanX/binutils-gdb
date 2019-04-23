@@ -598,18 +598,10 @@ sun32_cgen_insert_operand (CGEN_CPU_DESC cd,
       errmsg = insert_normal (cd, fields->f_rd, 0, 0, 24, 5, 32, total_length, buffer);
       break;
     case SUN32_OPERAND_T20 :
-      {
-        long value = fields->f_t20r;
-        value = ((SI) (((value) - (((pc) & (-4))))) >> (2));
-        errmsg = insert_normal (cd, value, 0|(1<<CGEN_IFLD_SIGNED), 0, 0, 20, 32, total_length, buffer);
-      }
+      errmsg = insert_normal (cd, fields->f_t20r, 0|(1<<CGEN_IFLD_SIGNED), 0, 19, 20, 32, total_length, buffer);
       break;
     case SUN32_OPERAND_T25 :
-      {
-        long value = fields->f_t25p;
-        value = ((SI) (((value) - (((pc) & (-4))))) >> (2));
-        errmsg = insert_normal (cd, value, 0|(1<<CGEN_IFLD_SIGNED), 0, 0, 25, 32, total_length, buffer);
-      }
+      errmsg = insert_normal (cd, fields->f_t25p, 0|(1<<CGEN_IFLD_SIGNED), 0, 24, 25, 32, total_length, buffer);
       break;
     case SUN32_OPERAND_U20 :
       errmsg = insert_normal (cd, fields->f_u20, 0, 0, 19, 20, 32, total_length, buffer);
@@ -683,20 +675,10 @@ sun32_cgen_extract_operand (CGEN_CPU_DESC cd,
       length = extract_normal (cd, ex_info, insn_value, 0, 0, 24, 5, 32, total_length, pc, & fields->f_rd);
       break;
     case SUN32_OPERAND_T20 :
-      {
-        long value;
-        length = extract_normal (cd, ex_info, insn_value, 0|(1<<CGEN_IFLD_SIGNED), 0, 0, 20, 32, total_length, pc, & value);
-        value = ((((value) << (2))) + (((pc) & (-4))));
-        fields->f_t20r = value;
-      }
+      length = extract_normal (cd, ex_info, insn_value, 0|(1<<CGEN_IFLD_SIGNED), 0, 19, 20, 32, total_length, pc, & fields->f_t20r);
       break;
     case SUN32_OPERAND_T25 :
-      {
-        long value;
-        length = extract_normal (cd, ex_info, insn_value, 0|(1<<CGEN_IFLD_SIGNED), 0, 0, 25, 32, total_length, pc, & value);
-        value = ((((value) << (2))) + (((pc) & (-4))));
-        fields->f_t25p = value;
-      }
+      length = extract_normal (cd, ex_info, insn_value, 0|(1<<CGEN_IFLD_SIGNED), 0, 24, 25, 32, total_length, pc, & fields->f_t25p);
       break;
     case SUN32_OPERAND_U20 :
       length = extract_normal (cd, ex_info, insn_value, 0, 0, 19, 20, 32, total_length, pc, & fields->f_u20);
