@@ -134,7 +134,7 @@
 
 ; unused feild which must be filled with zero
 (dwf f-x    "X   Field"  () 0 32 9 10 UINT (#f) (#f))
-(dwf f-xxxh "xxx for 18hi" () 0 32 19 2 UINT (#f) (#f))
+(dwf f-xxxh "xxx for 18hi" () 0 32 1 2 UINT (#f) (#f))
 (dwf f-xxxl "xxx for 16lo" () 0 32 15 1 UINT (#f) (#f))
 
 ; itype memory
@@ -146,7 +146,7 @@
 (dwf f-mem  "IMM Field"   (ABS-ADDR) 0 32 11  12  INT (#f) (#f))
 
 ; load address for hi and lo
-(dwf f-u18   "18 hiField"  (ABS-ADDR) 0 32 17 18 UINT (#f) (#f))
+(dwf f-u18   "18 hiField"  (ABS-ADDR) 0 32 19 18 UINT (#f) (#f))
 (dwf f-u14    "14 lo  Field"  (ABS-ADDR) 0 32 13 14 UINT (#f) (#f))
 
 ; long imm
@@ -358,7 +358,7 @@
 	("ldh hi 18 bit")
 	()
 	("ldh $rd,$hi18")
-	(+ TYPE_1 OP_8 rd XXXH_0 hi18)
+	(+ TYPE_1 OP_8 rd hi18 XXXH_0)
 	()
 	()
 )
