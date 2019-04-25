@@ -239,14 +239,15 @@ sun32_elf_final_link_relocate (reloc_howto_type *howto,
 		case R_SUN32_PCREL_25:
 			contents += offset;
 			pc = offset + Rvalue;
+			pc = pc >> 2;
+			printf("pc %lx \n", pc);
+			printf("addend %lx \n", addend);
 			Rvalue += addend;
 			Rvalue = (Rvalue >> howto->rightshift) & howto->dst_mask;
+			printf("Rvalue %lx \n", Rvalue);
 			x = bfd_get_32 (input_bfd, contents);
-			if(pc >= Rvalue) {
-				pc = pc >> 2;
-				pc = -1 * pc;
-			}
-			Rvalue = (Rvalue + pc - 1) & howto->dst_mask;
+			Rvalue = (Rvalue - pc - 1) & howto->dst_mask;
+			printf("Rvalue %lx \n", Rvalue);
 			x = (x & ~howto->dst_mask) | Rvalue;
 			bfd_put_32 (input_bfd, x, contents);
 			break;
