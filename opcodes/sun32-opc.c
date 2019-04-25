@@ -3,7 +3,7 @@
 
 THIS FILE IS MACHINE GENERATED WITH CGEN.
 
-Copyright (C) 1996-2019 Free Software Foundation, Inc.
+Copyright (C) 1996-2018 Free Software Foundation, Inc.
 
 This file is part of the GNU Binutils and/or GDB, the GNU debugger.
 
@@ -49,11 +49,15 @@ static const CGEN_IFMT ifmt_empty ATTRIBUTE_UNUSED = {
 };
 
 static const CGEN_IFMT ifmt_lda_hi ATTRIBUTE_UNUSED = {
-  32, 32, 0xfe0c0000, { { F (F_TYPE) }, { F (F_OP) }, { F (F_RD) }, { F (F_XXXH) }, { F (F_U18) }, { 0 } }
+  32, 32, 0xfe000003, { { F (F_TYPE) }, { F (F_OP) }, { F (F_RD) }, { F (F_U18) }, { F (F_XXXH) }, { 0 } }
 };
 
 static const CGEN_IFMT ifmt_lda_lo ATTRIBUTE_UNUSED = {
   32, 32, 0xfe008000, { { F (F_TYPE) }, { F (F_OP) }, { F (F_RD) }, { F (F_RA) }, { F (F_XXXL) }, { F (F_U14) }, { 0 } }
+};
+
+static const CGEN_IFMT ifmt_ret ATTRIBUTE_UNUSED = {
+  32, 32, 0xffffffff, { { F (F_TYPE) }, { F (F_COND) }, { F (F_MODE) }, { F (F_XXXT25) }, { 0 } }
 };
 
 static const CGEN_IFMT ifmt_add ATTRIBUTE_UNUSED = {
@@ -106,6 +110,12 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (LO14), 0 } },
     & ifmt_lda_lo, { 0x68000000 }
+  },
+/* ret */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, 0 } },
+    & ifmt_ret, { 0xac000000 }
   },
 /* add $rd,$ra,$rb */
   {
@@ -448,12 +458,6 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (T20), '(', OP (RA), ')', 0 } },
     & ifmt_bnereg, { 0xb6000000 }
-  },
-/* ret $t25 */
-  {
-    { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (T25), 0 } },
-    & ifmt_bnepc, { 0xac000000 }
   },
 };
 

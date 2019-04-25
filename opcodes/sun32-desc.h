@@ -3,7 +3,7 @@
 
 THIS FILE IS MACHINE GENERATED WITH CGEN.
 
-Copyright (C) 1996-2019 Free Software Foundation, Inc.
+Copyright (C) 1996-2018 Free Software Foundation, Inc.
 
 This file is part of the GNU Binutils and/or GDB, the GNU debugger.
 
@@ -122,6 +122,11 @@ typedef enum insn_cond {
  , COND_12, COND_13, COND_14, COND_15
 } INSN_COND;
 
+/* Enum declaration for insn cond enums.  */
+typedef enum insn_xxxt25 {
+  XXXT25_0
+} INSN_XXXT25;
+
 /* Attributes.  */
 
 /* Enum declaration for machine type selection.  */
@@ -165,11 +170,11 @@ typedef enum cgen_ifld_attr {
 typedef enum ifield_type {
   SUN32_F_NIL, SUN32_F_ANYOF, SUN32_F_TYPE, SUN32_F_OP
  , SUN32_F_RD, SUN32_F_RA, SUN32_F_RB, SUN32_F_X
- , SUN32_F_XXXH, SUN32_F_XXXL, SUN32_F_SFT, SUN32_F_A
- , SUN32_F_S, SUN32_F_U, SUN32_F_MEMS, SUN32_F_MEM
- , SUN32_F_U18, SUN32_F_U14, SUN32_F_U20, SUN32_F_I15
- , SUN32_F_MODE, SUN32_F_COND, SUN32_F_T25P, SUN32_F_T20R
- , SUN32_F_MAX
+ , SUN32_F_XXXH, SUN32_F_XXXL, SUN32_F_XXXT25, SUN32_F_SFT
+ , SUN32_F_A, SUN32_F_S, SUN32_F_U, SUN32_F_MEMS
+ , SUN32_F_MEM, SUN32_F_U18, SUN32_F_U14, SUN32_F_U20
+ , SUN32_F_I15, SUN32_F_MODE, SUN32_F_COND, SUN32_F_T25P
+ , SUN32_F_T20R, SUN32_F_MAX
 } IFIELD_TYPE;
 
 #define MAX_IFLD ((int) SUN32_F_MAX)

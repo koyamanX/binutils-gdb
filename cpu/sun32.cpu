@@ -136,6 +136,7 @@
 (dwf f-x    "X   Field"  () 0 32 9 10 UINT (#f) (#f))
 (dwf f-xxxh "xxx for 18hi" () 0 32 1 2 UINT (#f) (#f))
 (dwf f-xxxl "xxx for 16lo" () 0 32 15 1 UINT (#f) (#f))
+(dwf f-xxxt25 "" () 0 32 24 25 INT (#f) (#f))
 
 ; itype memory
 (dwf f-sft  "SFT Field"   () 0 32 11  3 UINT (#f) (#f))
@@ -264,7 +265,13 @@
 	f-cond
 	(.map .str (.iota 16))
 )
-
+(define-normal-insn-enum insn-xxxt25
+	"insn cond enums"
+	()
+	XXXT25_
+	f-xxxt25
+	("0")
+)
 
 (define-pmacro (rtype name mnemonic opcode)
 	(begin
@@ -370,6 +377,14 @@
 	()
 	()
 )
+(dni ret
+	("ret")
+	()
+	("ret")
+	(+ TYPE_2 COND_11 MODE_0 XXXT25_0)
+	()
+	()
+)
 
 ; RTYPE
 (rtype add add OP_0)
@@ -439,4 +454,3 @@
 (btype-reg bugereg  buge COND_10)
 (btype-reg callreg  call COND_13)
 
-(btype-pc retpc   ret  COND_11)

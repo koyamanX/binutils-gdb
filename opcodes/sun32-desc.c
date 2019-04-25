@@ -3,7 +3,7 @@
 
 THIS FILE IS MACHINE GENERATED WITH CGEN.
 
-Copyright (C) 1996-2019 Free Software Foundation, Inc.
+Copyright (C) 1996-2018 Free Software Foundation, Inc.
 
 This file is part of the GNU Binutils and/or GDB, the GNU debugger.
 
@@ -211,15 +211,16 @@ const CGEN_IFLD sun32_cgen_ifld_table[] =
   { SUN32_F_RA, "f-ra", 0, 32, 19, 5, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_RB, "f-rb", 0, 32, 14, 5, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_X, "f-x", 0, 32, 9, 10, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
-  { SUN32_F_XXXH, "f-xxxh", 0, 32, 19, 2, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
+  { SUN32_F_XXXH, "f-xxxh", 0, 32, 1, 2, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_XXXL, "f-xxxl", 0, 32, 15, 1, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
+  { SUN32_F_XXXT25, "f-xxxt25", 0, 32, 24, 25, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_SFT, "f-sft", 0, 32, 11, 3, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_A, "f-a", 0, 32, 12, 1, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_S, "f-s", 0, 32, 13, 1, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_U, "f-u", 0, 32, 14, 1, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_MEMS, "f-mems", 0, 32, 8, 9, { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_MEM, "f-mem", 0, 32, 11, 12, { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
-  { SUN32_F_U18, "f-u18", 0, 32, 17, 18, { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
+  { SUN32_F_U18, "f-u18", 0, 32, 19, 18, { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_U14, "f-u14", 0, 32, 13, 14, { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_U20, "f-u20", 0, 32, 19, 20, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_I15, "f-i15", 0, 32, 14, 15, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
@@ -289,7 +290,7 @@ const CGEN_OPERAND sun32_cgen_operand_table[] =
     { 0, { (const PTR) &sun32_cgen_ifld_table[SUN32_F_T20R] } },
     { 0, { { { (1<<MACH_BASE), 0 } } } }  },
 /* hi18: 18 bit imm */
-  { "hi18", SUN32_OPERAND_HI18, HW_H_UINT18, 17, 18,
+  { "hi18", SUN32_OPERAND_HI18, HW_H_UINT18, 19, 18,
     { 0, { (const PTR) &sun32_cgen_ifld_table[SUN32_F_U18] } },
     { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
 /* lo14: 14 bit imm */
@@ -324,6 +325,11 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
 /* ldl $rd,$ra,$lo14 */
   {
     SUN32_INSN_LDA_LO, "lda-lo", "ldl", 32,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* ret */
+  {
+    SUN32_INSN_RET, "ret", "ret", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
 /* add $rd,$ra,$rb */
@@ -609,11 +615,6 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
 /* call $t20($ra) */
   {
     SUN32_INSN_CALLREG, "callreg", "call", 32,
-    { 0, { { { (1<<MACH_BASE), 0 } } } }
-  },
-/* ret $t25 */
-  {
-    SUN32_INSN_RETPC, "retpc", "ret", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
 };

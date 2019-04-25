@@ -574,7 +574,7 @@ sun32_cgen_insert_operand (CGEN_CPU_DESC cd,
   switch (opindex)
     {
     case SUN32_OPERAND_HI18 :
-      errmsg = insert_normal (cd, fields->f_u18, 0|(1<<CGEN_IFLD_ABS_ADDR), 0, 17, 18, 32, total_length, buffer);
+      errmsg = insert_normal (cd, fields->f_u18, 0|(1<<CGEN_IFLD_ABS_ADDR), 0, 19, 18, 32, total_length, buffer);
       break;
     case SUN32_OPERAND_I15 :
       errmsg = insert_normal (cd, fields->f_i15, 0|(1<<CGEN_IFLD_SIGNED), 0, 14, 15, 32, total_length, buffer);
@@ -651,7 +651,7 @@ sun32_cgen_extract_operand (CGEN_CPU_DESC cd,
   switch (opindex)
     {
     case SUN32_OPERAND_HI18 :
-      length = extract_normal (cd, ex_info, insn_value, 0|(1<<CGEN_IFLD_ABS_ADDR), 0, 17, 18, 32, total_length, pc, & fields->f_u18);
+      length = extract_normal (cd, ex_info, insn_value, 0|(1<<CGEN_IFLD_ABS_ADDR), 0, 19, 18, 32, total_length, pc, & fields->f_u18);
       break;
     case SUN32_OPERAND_I15 :
       length = extract_normal (cd, ex_info, insn_value, 0|(1<<CGEN_IFLD_SIGNED), 0, 14, 15, 32, total_length, pc, & fields->f_i15);
