@@ -225,7 +225,7 @@ sun32_elf_final_link_relocate (reloc_howto_type *howto,
 			      int is_local ATTRIBUTE_UNUSED)
 {
 	bfd_reloc_status_type r = bfd_reloc_ok;
-	bfd_vma x, pc;
+	bfd_vma x/*, pc*/;
 	switch(howto->type) {
 		case R_SUN32_HI_18:
 		case R_SUN32_LO_14:
@@ -236,6 +236,7 @@ sun32_elf_final_link_relocate (reloc_howto_type *howto,
 			x = (x & ~howto->dst_mask) | Rvalue;
 			bfd_put_32 (input_bfd, x, contents);
 			break;
+			/*
 		case R_SUN32_PCREL_25:
 			contents += offset;
 			pc = offset + Rvalue;
@@ -247,6 +248,8 @@ sun32_elf_final_link_relocate (reloc_howto_type *howto,
 			x = (x & ~howto->dst_mask) | Rvalue;
 			bfd_put_32 (input_bfd, x, contents);
 			break;
+			*/
+		/*
 		case R_SUN32_ABS_20:
 			contents += offset;
 			Rvalue += addend;
@@ -256,8 +259,11 @@ sun32_elf_final_link_relocate (reloc_howto_type *howto,
 			x = (x & ~howto->dst_mask) | Rvalue;
 			bfd_put_32 (input_bfd, x, contents);
 			break;
+		*/
 
 		default:
+			if(howto->type == R_SUN32_PCREL_25)
+				addend -= 4;
 			r = _bfd_final_link_relocate (howto, input_bfd, input_section,
 			contents, offset,
 			Rvalue, addend);
