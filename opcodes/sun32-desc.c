@@ -3,7 +3,7 @@
 
 THIS FILE IS MACHINE GENERATED WITH CGEN.
 
-Copyright (C) 1996-2018 Free Software Foundation, Inc.
+Copyright (C) 1996-2019 Free Software Foundation, Inc.
 
 This file is part of the GNU Binutils and/or GDB, the GNU debugger.
 
@@ -330,6 +330,11 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
 /* ret */
   {
     SUN32_INSN_RET, "ret", "ret", 32,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* reti */
+  {
+    SUN32_INSN_RETI, "reti", "reti", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
 /* add $rd,$ra,$rb */

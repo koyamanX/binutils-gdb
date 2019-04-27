@@ -385,6 +385,16 @@
 	()
 	()
 )
+(dni reti
+	("reti")
+	()
+	("reti")
+	(+ TYPE_2 COND_12 MODE_0 XXXT25_0)
+	()
+	()
+)
+
+
 
 ; RTYPE
 (rtype add add OP_0)
