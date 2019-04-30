@@ -86,7 +86,7 @@ static reloc_howto_type sun32_elf_howto_table[] =
 		0x01ffffff,				/* dst_mask */
 		TRUE),					/* pcrel_offset */
 	HOWTO (R_SUN32_HI_18,		/* type */
-		14,						/* rightshift */
+		12,						/* rightshift */
 		2,						/* size */
 		18,						/* bitsize */
 		FALSE,					/* pc_relative */
@@ -96,7 +96,7 @@ static reloc_howto_type sun32_elf_howto_table[] =
 		"R_SUN32_HI_18",		/* name */
 		FALSE,					/* partial_inplace */
 		0x00000000,				/* src_mask */
-		0x0003ffff,				/* dst_mask */
+		0x000ffffc,				/* dst_mask */
 		FALSE),					/* pcrel_offset */
 	HOWTO (R_SUN32_LO_14,		/* type */
 		0,						/* rightshift */
