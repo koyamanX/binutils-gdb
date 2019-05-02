@@ -78,7 +78,7 @@ parse_hi18 (CGEN_CPU_DESC cd, const char **strp,
 		{
 			value &= 0xffffc000;
 			value >>= 14;
-			value &= 0x000ffffc;
+			value &= 0x000fffff;
 		}
 		*valuep = value;
 		return errmsg;
