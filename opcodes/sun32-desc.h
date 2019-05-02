@@ -50,7 +50,7 @@ extern "C" {
 #define CGEN_INT_INSN_P 1
 
 /* Maximum number of syntax elements in an instruction.  */
-#define CGEN_ACTUAL_MAX_SYNTAX_ELEMENTS 14
+#define CGEN_ACTUAL_MAX_SYNTAX_ELEMENTS 13
 
 /* CGEN_MNEMONIC_OPERANDS is defined if mnemonics have operands.
    e.g. In "b,a foo" the ",a" is an operand.  If mnemonics have operands

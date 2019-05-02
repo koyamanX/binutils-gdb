@@ -382,9 +382,14 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
     SUN32_INSN_MULT, "mult", "mult", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* multu $rd,$ra,$rb */
+/* rem $rd,$ra,$rb */
   {
-    SUN32_INSN_MULTU, "multu", "multu", 32,
+    SUN32_INSN_REM, "rem", "rem", 32,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* remu $rd,$ra,$rb */
+  {
+    SUN32_INSN_REMU, "remu", "remu", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
 /* div $rd,$ra,$rb */
@@ -447,9 +452,14 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
     SUN32_INSN_MULTI, "multi", "mult", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* multu $rd,$i15($ra) */
+/* rem $rd,$i15($ra) */
   {
-    SUN32_INSN_MULTUI, "multui", "multu", 32,
+    SUN32_INSN_REMI, "remi", "rem", 32,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* remu $rd,$i15($ra) */
+  {
+    SUN32_INSN_REMUI, "remui", "remu", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
 /* div $rd,$i15($ra) */

@@ -175,9 +175,15 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+    & ifmt_add, { 0x12000000 }
+  },
+/* rem $rd,$ra,$rb */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
     & ifmt_add, { 0xc000000 }
   },
-/* multu $rd,$ra,$rb */
+/* remu $rd,$ra,$rb */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
@@ -253,9 +259,15 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
+    & ifmt_addi, { 0x52000000 }
+  },
+/* rem $rd,$i15($ra) */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
     & ifmt_addi, { 0x4c000000 }
   },
-/* multu $rd,$i15($ra) */
+/* remu $rd,$i15($ra) */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
