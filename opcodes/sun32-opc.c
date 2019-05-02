@@ -175,7 +175,7 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
-    & ifmt_add, { 0x12000000 }
+    & ifmt_add, { 0x22000000 }
   },
 /* rem $rd,$ra,$rb */
   {
@@ -259,7 +259,7 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
-    & ifmt_addi, { 0x72000000 }
+    & ifmt_addi, { 0x62000000 }
   },
 /* rem $rd,$i15($ra) */
   {
