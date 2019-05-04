@@ -438,6 +438,9 @@
 (itype-mem sw sw OP_29)
 (itype-mem sh sh OP_30)
 (itype-mem sb sb OP_31)
+(itype-mem-u lhu lhu OP_26)
+(itype-mem-u lbu lbu OP_27)
+
 
 
 (btype-pc bnepc   bne  COND_0)

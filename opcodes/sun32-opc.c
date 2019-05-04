@@ -3,7 +3,7 @@
 
 THIS FILE IS MACHINE GENERATED WITH CGEN.
 
-Copyright (C) 1996-2018 Free Software Foundation, Inc.
+Copyright (C) 1996-2019 Free Software Foundation, Inc.
 
 This file is part of the GNU Binutils and/or GDB, the GNU debugger.
 
@@ -332,6 +332,18 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (M12), '(', OP (RA), ')', 0 } },
     & ifmt_lw, { 0x7e000000 }
+  },
+/* lhu $rd,$m12($ra) */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (M12), '(', OP (RA), ')', 0 } },
+    & ifmt_lw, { 0x74004000 }
+  },
+/* lbu $rd,$m12($ra) */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (M12), '(', OP (RA), ')', 0 } },
+    & ifmt_lw, { 0x76004000 }
   },
 /* bne $t25 */
   {
