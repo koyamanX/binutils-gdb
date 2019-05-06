@@ -214,6 +214,7 @@ const CGEN_IFLD sun32_cgen_ifld_table[] =
   { SUN32_F_XXXH, "f-xxxh", 0, 32, 1, 2, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_XXXL, "f-xxxl", 0, 32, 15, 1, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_XXXT25, "f-xxxt25", 0, 32, 24, 25, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
+  { SUN32_F_XXX20, "f-xxx20", 0, 32, 19, 20, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_SFT, "f-sft", 0, 32, 11, 3, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_A, "f-a", 0, 32, 12, 1, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_S, "f-s", 0, 32, 13, 1, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
@@ -482,9 +483,14 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
     SUN32_INSN_LUI, "lui", "lui", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* mvsr $rd,$u20 */
+/* mcsr $rd */
   {
-    SUN32_INSN_MVSR, "mvsr", "mvsr", 32,
+    SUN32_INSN_MCSR, "mcsr", "mcsr", 32,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* mrcs $rd */
+  {
+    SUN32_INSN_MRCS, "mrcs", "mrcs", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
 /* lw $rd,$m12($ra) */

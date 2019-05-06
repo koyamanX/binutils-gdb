@@ -127,6 +127,11 @@ typedef enum insn_xxxt25 {
   XXXT25_0
 } INSN_XXXT25;
 
+/* Enum declaration for insn cond enums.  */
+typedef enum insn_xxx20 {
+  XXX20_0
+} INSN_XXX20;
+
 /* Attributes.  */
 
 /* Enum declaration for machine type selection.  */
@@ -170,11 +175,11 @@ typedef enum cgen_ifld_attr {
 typedef enum ifield_type {
   SUN32_F_NIL, SUN32_F_ANYOF, SUN32_F_TYPE, SUN32_F_OP
  , SUN32_F_RD, SUN32_F_RA, SUN32_F_RB, SUN32_F_X
- , SUN32_F_XXXH, SUN32_F_XXXL, SUN32_F_XXXT25, SUN32_F_SFT
- , SUN32_F_A, SUN32_F_S, SUN32_F_U, SUN32_F_MEMS
- , SUN32_F_MEM, SUN32_F_U18, SUN32_F_U14, SUN32_F_U20
- , SUN32_F_I15, SUN32_F_MODE, SUN32_F_COND, SUN32_F_T25P
- , SUN32_F_T20R, SUN32_F_MAX
+ , SUN32_F_XXXH, SUN32_F_XXXL, SUN32_F_XXXT25, SUN32_F_XXX20
+ , SUN32_F_SFT, SUN32_F_A, SUN32_F_S, SUN32_F_U
+ , SUN32_F_MEMS, SUN32_F_MEM, SUN32_F_U18, SUN32_F_U14
+ , SUN32_F_U20, SUN32_F_I15, SUN32_F_MODE, SUN32_F_COND
+ , SUN32_F_T25P, SUN32_F_T20R, SUN32_F_MAX
 } IFIELD_TYPE;
 
 #define MAX_IFLD ((int) SUN32_F_MAX)

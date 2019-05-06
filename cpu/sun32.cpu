@@ -137,6 +137,7 @@
 (dwf f-xxxh "xxx for 18hi" () 0 32 1 2 UINT (#f) (#f))
 (dwf f-xxxl "xxx for 16lo" () 0 32 15 1 UINT (#f) (#f))
 (dwf f-xxxt25 "" () 0 32 24 25 INT (#f) (#f))
+(dwf f-xxx20 "" () 0 32 19 20 INT (#f) (#f))
 
 ; itype memory
 (dwf f-sft  "SFT Field"   () 0 32 11  3 UINT (#f) (#f))
@@ -272,7 +273,13 @@
 	f-xxxt25
 	("0")
 )
-
+(define-normal-insn-enum insn-xxx20
+	"insn cond enums"
+	()
+	XXX20_
+	f-xxx20
+	("0")
+)
 (define-pmacro (rtype name mnemonic opcode)
 	(begin
 		(dni name
@@ -297,6 +304,19 @@
 		)
 	)
 )
+(define-pmacro (itype-sp name mnemonic opcode)
+	(begin
+		(dni name
+			(.str mnemonic " itype-sp")
+			()
+			(.str mnemonic " $rd")
+			(+ TYPE_1 opcode rd XXX20_0)
+			()
+			()
+		)
+	)
+)
+
 (define-pmacro (itype name mnemonic opcode)
 	(begin
 		(dni name
@@ -431,7 +451,9 @@
 
 ; ITYPE lui
 (itype-lui lui lui OP_8)
-(itype-lui mvsr mvsr OP_13)
+(itype-sp mcsr mcsr OP_9)
+(itype-sp mrcs mrcs OP_13)
+
 
 (itype-mem lw lw OP_25)
 (itype-mem lh lh OP_26)

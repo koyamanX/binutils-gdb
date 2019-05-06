@@ -72,6 +72,10 @@ static const CGEN_IFMT ifmt_lui ATTRIBUTE_UNUSED = {
   32, 32, 0xfe000000, { { F (F_TYPE) }, { F (F_OP) }, { F (F_RD) }, { F (F_U20) }, { 0 } }
 };
 
+static const CGEN_IFMT ifmt_mcsr ATTRIBUTE_UNUSED = {
+  32, 32, 0xfe0fffff, { { F (F_TYPE) }, { F (F_OP) }, { F (F_RD) }, { F (F_XXX20) }, { 0 } }
+};
+
 static const CGEN_IFMT ifmt_lw ATTRIBUTE_UNUSED = {
   32, 32, 0xfe007000, { { F (F_TYPE) }, { F (F_OP) }, { F (F_RD) }, { F (F_RA) }, { F (F_U) }, { F (F_S) }, { F (F_A) }, { F (F_MEM) }, { 0 } }
 };
@@ -297,11 +301,17 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
     { { MNEM, ' ', OP (RD), ',', OP (U20), 0 } },
     & ifmt_lui, { 0x50000000 }
   },
-/* mvsr $rd,$u20 */
+/* mcsr $rd */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (U20), 0 } },
-    & ifmt_lui, { 0x5a000000 }
+    { { MNEM, ' ', OP (RD), 0 } },
+    & ifmt_mcsr, { 0x52000000 }
+  },
+/* mrcs $rd */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), 0 } },
+    & ifmt_mcsr, { 0x5a000000 }
   },
 /* lw $rd,$m12($ra) */
   {
