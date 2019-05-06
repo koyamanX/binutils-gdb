@@ -297,6 +297,12 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
     { { MNEM, ' ', OP (RD), ',', OP (U20), 0 } },
     & ifmt_lui, { 0x50000000 }
   },
+/* mvsr $rd,$u20 */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (U20), 0 } },
+    & ifmt_lui, { 0x5a000000 }
+  },
 /* lw $rd,$m12($ra) */
   {
     { 0, 0, 0, 0 },

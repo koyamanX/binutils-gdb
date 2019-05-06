@@ -431,6 +431,7 @@
 
 ; ITYPE lui
 (itype-lui lui lui OP_8)
+(itype-lui mvsr mvsr OP_13)
 
 (itype-mem lw lw OP_25)
 (itype-mem lh lh OP_26)

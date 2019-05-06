@@ -482,6 +482,11 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
     SUN32_INSN_LUI, "lui", "lui", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
+/* mvsr $rd,$u20 */
+  {
+    SUN32_INSN_MVSR, "mvsr", "mvsr", 32,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
 /* lw $rd,$m12($ra) */
   {
     SUN32_INSN_LW, "lw", "lw", 32,
