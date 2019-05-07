@@ -195,8 +195,10 @@ md_cgen_lookup_reloc (const CGEN_INSN *    insn ATTRIBUTE_UNUSED,
 			return BFD_RELOC_SUN32_HI_18;
 		case SUN32_OPERAND_LO14:
 			return BFD_RELOC_SUN32_LO_14;
+			/*
 		case SUN32_OPERAND_T20:
 			return BFD_RELOC_SUN32_ABS_20;
+			*/
 		default : /* Avoid -Wall warning.  */
 			break;
     }
