@@ -85,7 +85,7 @@ static const CGEN_IFMT ifmt_bnepc ATTRIBUTE_UNUSED = {
 };
 
 static const CGEN_IFMT ifmt_bnereg ATTRIBUTE_UNUSED = {
-  32, 32, 0xfe000000, { { F (F_TYPE) }, { F (F_COND) }, { F (F_MODE) }, { F (F_RA) }, { F (F_T20R) }, { 0 } }
+  32, 32, 0xfe000000, { { F (F_TYPE) }, { F (F_COND) }, { F (F_MODE) }, { F (F_RD) }, { F (F_T20R) }, { 0 } }
 };
 
 #undef F
@@ -433,76 +433,76 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
     { { MNEM, ' ', OP (T25), 0 } },
     & ifmt_bnepc, { 0xb4000000 }
   },
-/* bne $t20($ra) */
+/* bne $t20($rd) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (T20), '(', OP (RA), ')', 0 } },
+    { { MNEM, ' ', OP (T20), '(', OP (RD), ')', 0 } },
     & ifmt_bnereg, { 0x82000000 }
   },
-/* beq $t20($ra) */
+/* beq $t20($rd) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (T20), '(', OP (RA), ')', 0 } },
+    { { MNEM, ' ', OP (T20), '(', OP (RD), ')', 0 } },
     & ifmt_bnereg, { 0x86000000 }
   },
-/* bgt $t20($ra) */
+/* bgt $t20($rd) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (T20), '(', OP (RA), ')', 0 } },
+    { { MNEM, ' ', OP (T20), '(', OP (RD), ')', 0 } },
     & ifmt_bnereg, { 0x8a000000 }
   },
-/* bge $t20($ra) */
+/* bge $t20($rd) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (T20), '(', OP (RA), ')', 0 } },
+    { { MNEM, ' ', OP (T20), '(', OP (RD), ')', 0 } },
     & ifmt_bnereg, { 0x8e000000 }
   },
-/* blt $t20($ra) */
+/* blt $t20($rd) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (T20), '(', OP (RA), ')', 0 } },
+    { { MNEM, ' ', OP (T20), '(', OP (RD), ')', 0 } },
     & ifmt_bnereg, { 0x92000000 }
   },
-/* ble $t20($ra) */
+/* ble $t20($rd) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (T20), '(', OP (RA), ')', 0 } },
+    { { MNEM, ' ', OP (T20), '(', OP (RD), ')', 0 } },
     & ifmt_bnereg, { 0x96000000 }
   },
-/* b $t20($ra) */
+/* b $t20($rd) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (T20), '(', OP (RA), ')', 0 } },
+    { { MNEM, ' ', OP (T20), '(', OP (RD), ')', 0 } },
     & ifmt_bnereg, { 0x9a000000 }
   },
-/* bult $t20($ra) */
+/* bult $t20($rd) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (T20), '(', OP (RA), ')', 0 } },
+    { { MNEM, ' ', OP (T20), '(', OP (RD), ')', 0 } },
     & ifmt_bnereg, { 0x9e000000 }
   },
-/* bule $t20($ra) */
+/* bule $t20($rd) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (T20), '(', OP (RA), ')', 0 } },
+    { { MNEM, ' ', OP (T20), '(', OP (RD), ')', 0 } },
     & ifmt_bnereg, { 0xa2000000 }
   },
-/* bugt $t20($ra) */
+/* bugt $t20($rd) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (T20), '(', OP (RA), ')', 0 } },
+    { { MNEM, ' ', OP (T20), '(', OP (RD), ')', 0 } },
     & ifmt_bnereg, { 0xa6000000 }
   },
-/* buge $t20($ra) */
+/* buge $t20($rd) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (T20), '(', OP (RA), ')', 0 } },
+    { { MNEM, ' ', OP (T20), '(', OP (RD), ')', 0 } },
     & ifmt_bnereg, { 0xaa000000 }
   },
-/* call $t20($ra) */
+/* call $t20($rd) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (T20), '(', OP (RA), ')', 0 } },
+    { { MNEM, ' ', OP (T20), '(', OP (RD), ')', 0 } },
     & ifmt_bnereg, { 0xb6000000 }
   },
 };

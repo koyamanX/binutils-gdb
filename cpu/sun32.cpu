@@ -371,8 +371,8 @@
 		(dni name
 			(.str mnemonic " btype reg-relative")
 			()
-			(.str mnemonic " $t20($ra)")
-			(+ TYPE_2 cond MODE_1 ra t20)
+			(.str mnemonic " $t20($rd)")
+			(+ TYPE_2 cond MODE_1 rd t20)
 			()
 			()
 		)

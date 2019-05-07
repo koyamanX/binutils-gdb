@@ -593,62 +593,62 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
     SUN32_INSN_CALLPC, "callpc", "call", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* bne $t20($ra) */
+/* bne $t20($rd) */
   {
     SUN32_INSN_BNEREG, "bnereg", "bne", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* beq $t20($ra) */
+/* beq $t20($rd) */
   {
     SUN32_INSN_BEQREG, "beqreg", "beq", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* bgt $t20($ra) */
+/* bgt $t20($rd) */
   {
     SUN32_INSN_BGTREG, "bgtreg", "bgt", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* bge $t20($ra) */
+/* bge $t20($rd) */
   {
     SUN32_INSN_BGEREG, "bgereg", "bge", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* blt $t20($ra) */
+/* blt $t20($rd) */
   {
     SUN32_INSN_BLTREG, "bltreg", "blt", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* ble $t20($ra) */
+/* ble $t20($rd) */
   {
     SUN32_INSN_BLEREG, "blereg", "ble", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* b $t20($ra) */
+/* b $t20($rd) */
   {
     SUN32_INSN_BREG, "breg", "b", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* bult $t20($ra) */
+/* bult $t20($rd) */
   {
     SUN32_INSN_BULTREG, "bultreg", "bult", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* bule $t20($ra) */
+/* bule $t20($rd) */
   {
     SUN32_INSN_BULEREG, "bulereg", "bule", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* bugt $t20($ra) */
+/* bugt $t20($rd) */
   {
     SUN32_INSN_BUGTREG, "bugtreg", "bugt", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* buge $t20($ra) */
+/* buge $t20($rd) */
   {
     SUN32_INSN_BUGEREG, "bugereg", "buge", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* call $t20($ra) */
+/* call $t20($rd) */
   {
     SUN32_INSN_CALLREG, "callreg", "call", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
