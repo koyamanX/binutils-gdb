@@ -3,7 +3,7 @@
 
 THIS FILE IS MACHINE GENERATED WITH CGEN.
 
-Copyright (C) 1996-2019 Free Software Foundation, Inc.
+Copyright (C) 1996-2018 Free Software Foundation, Inc.
 
 This file is part of the GNU Binutils and/or GDB, the GNU debugger.
 
@@ -72,12 +72,8 @@ static const CGEN_IFMT ifmt_lui ATTRIBUTE_UNUSED = {
   32, 32, 0xfe000000, { { F (F_TYPE) }, { F (F_OP) }, { F (F_RD) }, { F (F_U20) }, { 0 } }
 };
 
-static const CGEN_IFMT ifmt_mcsr ATTRIBUTE_UNUSED = {
-  32, 32, 0xfe0fffff, { { F (F_TYPE) }, { F (F_OP) }, { F (F_RD) }, { F (F_XXX20) }, { 0 } }
-};
-
 static const CGEN_IFMT ifmt_lw ATTRIBUTE_UNUSED = {
-  32, 32, 0xfe007000, { { F (F_TYPE) }, { F (F_OP) }, { F (F_RD) }, { F (F_RA) }, { F (F_U) }, { F (F_S) }, { F (F_A) }, { F (F_MEM) }, { 0 } }
+  32, 32, 0xfe004000, { { F (F_TYPE) }, { F (F_OP) }, { F (F_RD) }, { F (F_RA) }, { F (F_S) }, { F (F_MEM) }, { 0 } }
 };
 
 static const CGEN_IFMT ifmt_bnepc ATTRIBUTE_UNUSED = {
@@ -107,13 +103,13 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (HI18), 0 } },
-    & ifmt_lda_hi, { 0x50000000 }
+    & ifmt_lda_hi, { 0x7e000000 }
   },
 /* ldl $rd,$ra,$lo14 */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (LO14), 0 } },
-    & ifmt_lda_lo, { 0x68000000 }
+    & ifmt_lda_lo, { 0x4c000000 }
   },
 /* ret */
   {
@@ -137,79 +133,85 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
-    & ifmt_add, { 0x20000000 }
-  },
-/* sll $rd,$ra,$rb */
-  {
-    { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
     & ifmt_add, { 0x2000000 }
-  },
-/* srl $rd,$ra,$rb */
-  {
-    { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
-    & ifmt_add, { 0x4000000 }
-  },
-/* sra $rd,$ra,$rb */
-  {
-    { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
-    & ifmt_add, { 0x6000000 }
-  },
-/* xor $rd,$ra,$rb */
-  {
-    { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
-    & ifmt_add, { 0x8000000 }
-  },
-/* or $rd,$ra,$rb */
-  {
-    { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
-    & ifmt_add, { 0x28000000 }
-  },
-/* and $rd,$ra,$rb */
-  {
-    { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
-    & ifmt_add, { 0xa000000 }
-  },
-/* mult $rd,$ra,$rb */
-  {
-    { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
-    & ifmt_add, { 0x22000000 }
-  },
-/* rem $rd,$ra,$rb */
-  {
-    { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
-    & ifmt_add, { 0xc000000 }
-  },
-/* remu $rd,$ra,$rb */
-  {
-    { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
-    & ifmt_add, { 0x2c000000 }
-  },
-/* div $rd,$ra,$rb */
-  {
-    { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
-    & ifmt_add, { 0xe000000 }
-  },
-/* divu $rd,$ra,$rb */
-  {
-    { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
-    & ifmt_add, { 0x2e000000 }
   },
 /* cmp $rd,$ra,$rb */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
-    & ifmt_add, { 0x30000000 }
+    & ifmt_add, { 0x12000000 }
+  },
+/* sll $rd,$ra,$rb */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+    & ifmt_add, { 0x4000000 }
+  },
+/* srl $rd,$ra,$rb */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+    & ifmt_add, { 0x6000000 }
+  },
+/* sra $rd,$ra,$rb */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+    & ifmt_add, { 0x8000000 }
+  },
+/* xor $rd,$ra,$rb */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+    & ifmt_add, { 0xa000000 }
+  },
+/* or $rd,$ra,$rb */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+    & ifmt_add, { 0xc000000 }
+  },
+/* and $rd,$ra,$rb */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+    & ifmt_add, { 0xe000000 }
+  },
+/* mult $rd,$ra,$rb */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+    & ifmt_add, { 0x16000000 }
+  },
+/* multu $rd,$ra,$rb */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+    & ifmt_add, { 0x14000000 }
+  },
+/* div $rd,$ra,$rb */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+    & ifmt_add, { 0x10000000 }
+  },
+/* divu $rd,$ra,$rb */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+    & ifmt_add, { 0x12000000 }
+  },
+/* rem $rd,$ra,$rb */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+    & ifmt_add, { 0x1a000000 }
+  },
+/* remu $rd,$ra,$rb */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+    & ifmt_add, { 0x18000000 }
   },
 /* add $rd,$i15($ra) */
   {
@@ -217,149 +219,137 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
     { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
     & ifmt_addi, { 0x40000000 }
   },
-/* sub $rd,$i15($ra) */
-  {
-    { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
-    & ifmt_addi, { 0x40000000 }
-  },
-/* sll $rd,$i15($ra) */
+/* cmp $rd,$i15($ra) */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
     & ifmt_addi, { 0x42000000 }
   },
-/* srl $rd,$i15($ra) */
+/* sll $rd,$i15($ra) */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
     & ifmt_addi, { 0x44000000 }
   },
-/* sra $rd,$i15($ra) */
+/* srl $rd,$i15($ra) */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
     & ifmt_addi, { 0x46000000 }
   },
-/* xor $rd,$i15($ra) */
+/* sra $rd,$i15($ra) */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
     & ifmt_addi, { 0x48000000 }
   },
-/* or $rd,$i15($ra) */
-  {
-    { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
-    & ifmt_addi, { 0x68000000 }
-  },
-/* and $rd,$i15($ra) */
+/* xor $rd,$i15($ra) */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
     & ifmt_addi, { 0x4a000000 }
   },
-/* mult $rd,$i15($ra) */
-  {
-    { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
-    & ifmt_addi, { 0x62000000 }
-  },
-/* rem $rd,$i15($ra) */
+/* or $rd,$i15($ra) */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
     & ifmt_addi, { 0x4c000000 }
   },
-/* remu $rd,$i15($ra) */
-  {
-    { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
-    & ifmt_addi, { 0x6c000000 }
-  },
-/* div $rd,$i15($ra) */
+/* and $rd,$i15($ra) */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
     & ifmt_addi, { 0x4e000000 }
   },
+/* mult $rd,$i15($ra) */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
+    & ifmt_addi, { 0x56000000 }
+  },
+/* multu $rd,$i15($ra) */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
+    & ifmt_addi, { 0x54000000 }
+  },
+/* div $rd,$i15($ra) */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
+    & ifmt_addi, { 0x50000000 }
+  },
 /* divu $rd,$i15($ra) */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
-    & ifmt_addi, { 0x6e000000 }
+    & ifmt_addi, { 0x52000000 }
   },
-/* cmp $rd,$i15($ra) */
+/* rem $rd,$i15($ra) */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
-    & ifmt_addi, { 0x60000000 }
+    & ifmt_addi, { 0x5a000000 }
+  },
+/* remu $rd,$i15($ra) */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
+    & ifmt_addi, { 0x58000000 }
   },
 /* lui $rd,$u20 */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (U20), 0 } },
-    & ifmt_lui, { 0x50000000 }
+    & ifmt_lui, { 0x7e000000 }
   },
-/* mcsr $rd */
+/* lw $rd,$m14($ra) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), 0 } },
-    & ifmt_mcsr, { 0x52000000 }
+    { { MNEM, ' ', OP (RD), ',', OP (M14), '(', OP (RA), ')', 0 } },
+    & ifmt_lw, { 0x70000000 }
   },
-/* mrcs $rd */
+/* lh $rd,$m14($ra) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), 0 } },
-    & ifmt_mcsr, { 0x5a000000 }
-  },
-/* lw $rd,$m12($ra) */
-  {
-    { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (M12), '(', OP (RA), ')', 0 } },
-    & ifmt_lw, { 0x72000000 }
-  },
-/* lh $rd,$m12($ra) */
-  {
-    { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (M12), '(', OP (RA), ')', 0 } },
-    & ifmt_lw, { 0x74000000 }
-  },
-/* lb $rd,$m12($ra) */
-  {
-    { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (M12), '(', OP (RA), ')', 0 } },
+    { { MNEM, ' ', OP (RD), ',', OP (M14), '(', OP (RA), ')', 0 } },
     & ifmt_lw, { 0x76000000 }
   },
-/* sw $rd,$m12($ra) */
+/* lhu $rd,$m14($ra) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (M12), '(', OP (RA), ')', 0 } },
-    & ifmt_lw, { 0x7a000000 }
+    { { MNEM, ' ', OP (RD), ',', OP (M14), '(', OP (RA), ')', 0 } },
+    & ifmt_lw, { 0x72000000 }
   },
-/* sh $rd,$m12($ra) */
+/* lb $rd,$m14($ra) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (M12), '(', OP (RA), ')', 0 } },
+    { { MNEM, ' ', OP (RD), ',', OP (M14), '(', OP (RA), ')', 0 } },
     & ifmt_lw, { 0x7c000000 }
   },
-/* sb $rd,$m12($ra) */
+/* lbu $rd,$m14($ra) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (M12), '(', OP (RA), ')', 0 } },
-    & ifmt_lw, { 0x7e000000 }
+    { { MNEM, ' ', OP (RD), ',', OP (M14), '(', OP (RA), ')', 0 } },
+    & ifmt_lw, { 0x78000000 }
   },
-/* lhu $rd,$m12($ra) */
+/* sw $rd,$m14($ra) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (M12), '(', OP (RA), ')', 0 } },
-    & ifmt_lw, { 0x74004000 }
+    { { MNEM, ' ', OP (RD), ',', OP (M14), '(', OP (RA), ')', 0 } },
+    & ifmt_lw, { 0x60000000 }
   },
-/* lbu $rd,$m12($ra) */
+/* sh $rd,$m14($ra) */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (M12), '(', OP (RA), ')', 0 } },
-    & ifmt_lw, { 0x76004000 }
+    { { MNEM, ' ', OP (RD), ',', OP (M14), '(', OP (RA), ')', 0 } },
+    & ifmt_lw, { 0x62000000 }
+  },
+/* sb $rd,$m14($ra) */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (M14), '(', OP (RA), ')', 0 } },
+    & ifmt_lw, { 0x68000000 }
   },
 /* bne $t25 */
   {
@@ -432,6 +422,12 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (T25), 0 } },
     & ifmt_bnepc, { 0xb4000000 }
+  },
+/* scall $t25 */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (T25), 0 } },
+    & ifmt_bnepc, { 0xbc000000 }
   },
 /* bne $t20($rd) */
   {

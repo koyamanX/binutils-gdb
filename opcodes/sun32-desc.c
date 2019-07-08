@@ -3,7 +3,7 @@
 
 THIS FILE IS MACHINE GENERATED WITH CGEN.
 
-Copyright (C) 1996-2019 Free Software Foundation, Inc.
+Copyright (C) 1996-2018 Free Software Foundation, Inc.
 
 This file is part of the GNU Binutils and/or GDB, the GNU debugger.
 
@@ -184,11 +184,8 @@ const CGEN_HW_ENTRY sun32_cgen_hw_table[] =
   { "h-iaddr", HW_H_IADDR, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } },
   { "h-pc", HW_H_PC, CGEN_ASM_NONE, 0, { 0|A(PC), { { { (1<<MACH_BASE), 0 } } } } },
   { "h-gr", HW_H_GR, CGEN_ASM_KEYWORD, (PTR) & sun32_cgen_opval_h_gr, { 0, { { { (1<<MACH_BASE), 0 } } } } },
-  { "h-int12", HW_H_INT12, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } },
   { "h-int15", HW_H_INT15, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } },
   { "h-uint20", HW_H_UINT20, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } },
-  { "h-int25", HW_H_INT25, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } },
-  { "h-int20", HW_H_INT20, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } },
   { "h-uint18", HW_H_UINT18, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } },
   { "h-uint14", HW_H_UINT14, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } },
   { 0, 0, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } }
@@ -215,12 +212,10 @@ const CGEN_IFLD sun32_cgen_ifld_table[] =
   { SUN32_F_XXXL, "f-xxxl", 0, 32, 15, 1, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_XXXT25, "f-xxxt25", 0, 32, 24, 25, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_XXX20, "f-xxx20", 0, 32, 19, 20, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
-  { SUN32_F_SFT, "f-sft", 0, 32, 11, 3, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
-  { SUN32_F_A, "f-a", 0, 32, 12, 1, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
-  { SUN32_F_S, "f-s", 0, 32, 13, 1, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
-  { SUN32_F_U, "f-u", 0, 32, 14, 1, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
-  { SUN32_F_MEMS, "f-mems", 0, 32, 8, 9, { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
-  { SUN32_F_MEM, "f-mem", 0, 32, 11, 12, { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
+  { SUN32_F_SFT, "f-sft", 0, 32, 13, 3, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
+  { SUN32_F_S, "f-s", 0, 32, 14, 1, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
+  { SUN32_F_MEMS, "f-mems", 0, 32, 10, 11, { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
+  { SUN32_F_MEM, "f-mem", 0, 32, 13, 14, { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_U18, "f-u18", 0, 32, 19, 18, { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_U14, "f-u14", 0, 32, 13, 14, { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_U20, "f-u20", 0, 32, 19, 20, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
@@ -274,12 +269,12 @@ const CGEN_OPERAND sun32_cgen_operand_table[] =
   { "i15", SUN32_OPERAND_I15, HW_H_INT15, 14, 15,
     { 0, { (const PTR) &sun32_cgen_ifld_table[SUN32_F_I15] } },
     { 0, { { { (1<<MACH_BASE), 0 } } } }  },
-/* m9: i9 byte aligned memory */
-  { "m9", SUN32_OPERAND_M9, HW_H_ADDR, 8, 9,
+/* m11: i11 byte aligned memory */
+  { "m11", SUN32_OPERAND_M11, HW_H_ADDR, 10, 11,
     { 0, { (const PTR) &sun32_cgen_ifld_table[SUN32_F_MEMS] } },
     { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
-/* m12: i12 byte aligned memory */
-  { "m12", SUN32_OPERAND_M12, HW_H_ADDR, 11, 12,
+/* m14: i14 byte aligned memory */
+  { "m14", SUN32_OPERAND_M14, HW_H_ADDR, 13, 14,
     { 0, { (const PTR) &sun32_cgen_ifld_table[SUN32_F_MEM] } },
     { 0|A(ABS_ADDR), { { { (1<<MACH_BASE), 0 } } } }  },
 /* t25: i25 word aligned */
@@ -348,6 +343,11 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
     SUN32_INSN_SUB, "sub", "sub", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
+/* cmp $rd,$ra,$rb */
+  {
+    SUN32_INSN_CMP, "cmp", "cmp", 32,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
 /* sll $rd,$ra,$rb */
   {
     SUN32_INSN_SLL, "sll", "sll", 32,
@@ -383,14 +383,9 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
     SUN32_INSN_MULT, "mult", "mult", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* rem $rd,$ra,$rb */
+/* multu $rd,$ra,$rb */
   {
-    SUN32_INSN_REM, "rem", "rem", 32,
-    { 0, { { { (1<<MACH_BASE), 0 } } } }
-  },
-/* remu $rd,$ra,$rb */
-  {
-    SUN32_INSN_REMU, "remu", "remu", 32,
+    SUN32_INSN_MULTU, "multu", "multu", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
 /* div $rd,$ra,$rb */
@@ -403,9 +398,14 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
     SUN32_INSN_DIVU, "divu", "divu", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* cmp $rd,$ra,$rb */
+/* rem $rd,$ra,$rb */
   {
-    SUN32_INSN_CMP, "cmp", "cmp", 32,
+    SUN32_INSN_REM, "rem", "rem", 32,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* remu $rd,$ra,$rb */
+  {
+    SUN32_INSN_REMU, "remu", "remu", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
 /* add $rd,$i15($ra) */
@@ -413,9 +413,9 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
     SUN32_INSN_ADDI, "addi", "add", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* sub $rd,$i15($ra) */
+/* cmp $rd,$i15($ra) */
   {
-    SUN32_INSN_SUBI, "subi", "sub", 32,
+    SUN32_INSN_CMPI, "cmpi", "cmp", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
 /* sll $rd,$i15($ra) */
@@ -453,14 +453,9 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
     SUN32_INSN_MULTI, "multi", "mult", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* rem $rd,$i15($ra) */
+/* multu $rd,$i15($ra) */
   {
-    SUN32_INSN_REMI, "remi", "rem", 32,
-    { 0, { { { (1<<MACH_BASE), 0 } } } }
-  },
-/* remu $rd,$i15($ra) */
-  {
-    SUN32_INSN_REMUI, "remui", "remu", 32,
+    SUN32_INSN_MULTUI, "multui", "multu", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
 /* div $rd,$i15($ra) */
@@ -473,9 +468,14 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
     SUN32_INSN_DIVUI, "divui", "divu", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* cmp $rd,$i15($ra) */
+/* rem $rd,$i15($ra) */
   {
-    SUN32_INSN_CMPI, "cmpi", "cmp", 32,
+    SUN32_INSN_REMI, "remi", "rem", 32,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* remu $rd,$i15($ra) */
+  {
+    SUN32_INSN_REMUI, "remui", "remu", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
 /* lui $rd,$u20 */
@@ -483,54 +483,44 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
     SUN32_INSN_LUI, "lui", "lui", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* mcsr $rd */
-  {
-    SUN32_INSN_MCSR, "mcsr", "mcsr", 32,
-    { 0, { { { (1<<MACH_BASE), 0 } } } }
-  },
-/* mrcs $rd */
-  {
-    SUN32_INSN_MRCS, "mrcs", "mrcs", 32,
-    { 0, { { { (1<<MACH_BASE), 0 } } } }
-  },
-/* lw $rd,$m12($ra) */
+/* lw $rd,$m14($ra) */
   {
     SUN32_INSN_LW, "lw", "lw", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* lh $rd,$m12($ra) */
+/* lh $rd,$m14($ra) */
   {
     SUN32_INSN_LH, "lh", "lh", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* lb $rd,$m12($ra) */
-  {
-    SUN32_INSN_LB, "lb", "lb", 32,
-    { 0, { { { (1<<MACH_BASE), 0 } } } }
-  },
-/* sw $rd,$m12($ra) */
-  {
-    SUN32_INSN_SW, "sw", "sw", 32,
-    { 0, { { { (1<<MACH_BASE), 0 } } } }
-  },
-/* sh $rd,$m12($ra) */
-  {
-    SUN32_INSN_SH, "sh", "sh", 32,
-    { 0, { { { (1<<MACH_BASE), 0 } } } }
-  },
-/* sb $rd,$m12($ra) */
-  {
-    SUN32_INSN_SB, "sb", "sb", 32,
-    { 0, { { { (1<<MACH_BASE), 0 } } } }
-  },
-/* lhu $rd,$m12($ra) */
+/* lhu $rd,$m14($ra) */
   {
     SUN32_INSN_LHU, "lhu", "lhu", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* lbu $rd,$m12($ra) */
+/* lb $rd,$m14($ra) */
+  {
+    SUN32_INSN_LB, "lb", "lb", 32,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* lbu $rd,$m14($ra) */
   {
     SUN32_INSN_LBU, "lbu", "lbu", 32,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* sw $rd,$m14($ra) */
+  {
+    SUN32_INSN_SW, "sw", "sw", 32,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* sh $rd,$m14($ra) */
+  {
+    SUN32_INSN_SH, "sh", "sh", 32,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* sb $rd,$m14($ra) */
+  {
+    SUN32_INSN_SB, "sb", "sb", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
 /* bne $t25 */
@@ -591,6 +581,11 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
 /* call $t25 */
   {
     SUN32_INSN_CALLPC, "callpc", "call", 32,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* scall $t25 */
+  {
+    SUN32_INSN_SCALL, "scall", "scall", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
 /* bne $t20($rd) */

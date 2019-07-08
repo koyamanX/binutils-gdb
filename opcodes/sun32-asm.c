@@ -148,18 +148,18 @@ sun32_cgen_parse_operand (CGEN_CPU_DESC cd,
     case SUN32_OPERAND_LO14 :
       errmsg = parse_lo14 (cd, strp, SUN32_OPERAND_LO14, (unsigned long *) (& fields->f_u14));
       break;
-    case SUN32_OPERAND_M12 :
+    case SUN32_OPERAND_M11 :
       {
         bfd_vma value = 0;
-        errmsg = cgen_parse_address (cd, strp, SUN32_OPERAND_M12, 0, NULL,  & value);
-        fields->f_mem = value;
+        errmsg = cgen_parse_address (cd, strp, SUN32_OPERAND_M11, 0, NULL,  & value);
+        fields->f_mems = value;
       }
       break;
-    case SUN32_OPERAND_M9 :
+    case SUN32_OPERAND_M14 :
       {
         bfd_vma value = 0;
-        errmsg = cgen_parse_address (cd, strp, SUN32_OPERAND_M9, 0, NULL,  & value);
-        fields->f_mems = value;
+        errmsg = cgen_parse_address (cd, strp, SUN32_OPERAND_M14, 0, NULL,  & value);
+        fields->f_mem = value;
       }
       break;
     case SUN32_OPERAND_RA :

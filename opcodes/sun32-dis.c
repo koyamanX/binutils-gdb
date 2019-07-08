@@ -103,11 +103,11 @@ sun32_cgen_print_operand (CGEN_CPU_DESC cd,
     case SUN32_OPERAND_LO14 :
       print_normal (cd, info, fields->f_u14, 0|(1<<CGEN_OPERAND_ABS_ADDR), pc, length);
       break;
-    case SUN32_OPERAND_M12 :
-      print_address (cd, info, fields->f_mem, 0|(1<<CGEN_OPERAND_ABS_ADDR), pc, length);
-      break;
-    case SUN32_OPERAND_M9 :
+    case SUN32_OPERAND_M11 :
       print_address (cd, info, fields->f_mems, 0|(1<<CGEN_OPERAND_ABS_ADDR), pc, length);
+      break;
+    case SUN32_OPERAND_M14 :
+      print_address (cd, info, fields->f_mem, 0|(1<<CGEN_OPERAND_ABS_ADDR), pc, length);
       break;
     case SUN32_OPERAND_RA :
       print_keyword (cd, info, & sun32_cgen_opval_h_gr, fields->f_ra, 0);

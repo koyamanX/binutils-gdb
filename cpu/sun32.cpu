@@ -35,7 +35,7 @@
 	(comment "SUN32 instructin set")
 	(default-insn-bitsize 32)
 	(base-insn-bitsize 32)
-	(decode-assist (31 30 29 28 27 26 25))
+	(decode-assist (31 30))
 	(liw-insns 1)
 	(parallel-insns 1)
 ;	(setup-semantics (set-quiet (reg h-gr pc) (add pc 4)))
@@ -90,17 +90,8 @@
 
 ; define-normal-hardware(pmacro)
 
-; imm with shift
-(dnh h-int12 "12 bit int" () (immediate (INT 12)) () () ())
-; imm without shift
 (dnh h-int15  "15 bit int"  () (immediate (INT  15)) () () ())
-; long imm
 (dnh h-uint20 "20 bit uint" () (immediate (UINT 20)) () () ())
-
-; branch target
-(dnh h-int25 "25 bit int" () (immediate (INT 25)) () () ())
-(dnh h-int20 "20 bit int" () (immediate (INT 20)) () () ())
-
 (dnh h-uint18 "18 bit uint hi" () (immediate (UINT 18)) () () ())
 (dnh h-uint14 "14 bit uint lo" () (immediate (UINT 14)) () () ())
 	
@@ -122,16 +113,11 @@
 		(.splice decode (.unsplice x-decode))
 	)
 )
-;NOTE
-;add multi field for i-type load store instruction
-;where u field is used to specifiy whether unsigned load or not
-
 (dwf f-type "TYPE Field" () 0 32 31 2 UINT (#f) (#f))
 (dwf f-op   "OP  Field"  () 0 32 29 5 UINT (#f) (#f))
 (dwf f-rd   "RD  Field"  () 0 32 24 5 UINT (#f) (#f))
 (dwf f-ra   "RA  Field"  () 0 32 19 5 UINT (#f) (#f))
 (dwf f-rb   "RB  Field"  () 0 32 14 5 UINT (#f) (#f))
-
 ; unused feild which must be filled with zero
 (dwf f-x    "X   Field"  () 0 32 9 10 UINT (#f) (#f))
 (dwf f-xxxh "xxx for 18hi" () 0 32 1 2 UINT (#f) (#f))
@@ -140,12 +126,10 @@
 (dwf f-xxx20 "" () 0 32 19 20 INT (#f) (#f))
 
 ; itype memory
-(dwf f-sft  "SFT Field"   () 0 32 11  3 UINT (#f) (#f))
-(dwf f-a    "A   Field"   () 0 32 12 1 UINT (#f) (#f))
-(dwf f-s    "S   Field"   () 0 32 13 1 UINT (#f) (#f))
-(dwf f-u    "U   Field"   () 0 32 14 1 UINT (#f) (#f))
-(dwf f-mems  "IMM Field shifted"   (ABS-ADDR) 0 32 8  9  INT (#f) (#f))
-(dwf f-mem  "IMM Field"   (ABS-ADDR) 0 32 11  12  INT (#f) (#f))
+(dwf f-sft  "SFT Field"   () 0 32 13  3 UINT (#f) (#f))
+(dwf f-s    "S   Field"   () 0 32 14 1 UINT (#f) (#f))
+(dwf f-mems  "IMM Field shifted"   (ABS-ADDR) 0 32 10  11  INT (#f) (#f))
+(dwf f-mem  "IMM Field"   (ABS-ADDR) 0 32 13  14  INT (#f) (#f))
 
 ; load address for hi and lo
 (dwf f-u18   "18 hiField"  (ABS-ADDR) 0 32 19 18 UINT (#f) (#f))
@@ -169,8 +153,8 @@
 (dnop rb "source register b" () h-gr f-rb)
 (dnop u20 "u20 long imm" () h-uint20 f-u20)
 (dnop i15 "i15 imm without shift" () h-int15 f-i15)
-(dnop m9  "i9 byte aligned memory"  () h-addr  f-mems)
-(dnop m12  "i12 byte aligned memory"  () h-addr  f-mem)
+(dnop m11  "i11 byte aligned memory"  () h-addr  f-mems)
+(dnop m14  "i14 byte aligned memory"  () h-addr  f-mem)
 ; shifted by 2
 (dnop t25 "i25 word aligned" () h-iaddr f-t25p)
 (dnop t20 "i20 word aligned" () h-iaddr f-t20r)
@@ -209,25 +193,11 @@
 	f-op 
 	(.map .str (.iota 32))
 )
-(define-normal-insn-enum insn-u 
-	"insn u enums" 
-	() 
-	U_ 
-	f-u 
-	("0" "1")
-)
 (define-normal-insn-enum insn-s 
 	"insn s enums" 
 	() 
 	S_ 
 	f-s 
-	("0" "1")
-)
-(define-normal-insn-enum insn-a 
-	"insn a enums" 
-	() 
-	A_ 
-	f-a 
 	("0" "1")
 )
 (define-normal-insn-enum insn-x 
@@ -304,19 +274,6 @@
 		)
 	)
 )
-(define-pmacro (itype-sp name mnemonic opcode)
-	(begin
-		(dni name
-			(.str mnemonic " itype-sp")
-			()
-			(.str mnemonic " $rd")
-			(+ TYPE_1 opcode rd XXX20_0)
-			()
-			()
-		)
-	)
-)
-
 (define-pmacro (itype name mnemonic opcode)
 	(begin
 		(dni name
@@ -329,25 +286,13 @@
 		)
 	)
 )
-(define-pmacro (itype-mem-u name mnemonic opcode)
-	(begin
-		(dni name
-			(.str mnemonic " itype u memory imm not shifted")
-			()
-			(.str mnemonic " $rd,$m12($ra)")
-			(+ TYPE_1 opcode rd ra U_1 S_0 A_0 m12)
-			()
-			()
-		)
-	)
-)
 (define-pmacro (itype-mem name mnemonic opcode)
 	(begin
 		(dni name
-			(.str mnemonic " itype u memory imm not shifted")
+			(.str mnemonic " itype memory imm not shifted")
 			()
-			(.str mnemonic " $rd,$m12($ra)")
-			(+ TYPE_1 opcode rd ra U_0 S_0 A_0 m12)
+			(.str mnemonic " $rd,$m14($ra)")
+			(+ TYPE_1 opcode rd ra S_0 m14)
 			()
 			()
 		)
@@ -385,7 +330,7 @@
 	("ldh hi 18 bit")
 	()
 	("ldh $rd,$hi18")
-	(+ TYPE_1 OP_8 rd hi18 XXXH_0)
+	(+ TYPE_1 OP_31 rd hi18 XXXH_0)
 	()
 	()
 )
@@ -393,7 +338,7 @@
 	("ldl lo 14 bit")
 	()
 	("ldl $rd,$ra,$lo14")
-	(+ TYPE_1 OP_20 rd ra XXXL_0 lo14)
+	(+ TYPE_1 OP_6 rd ra XXXL_0 lo14)
 	()
 	()
 )
@@ -418,53 +363,51 @@
 
 ; RTYPE
 (rtype add add OP_0)
-(rtype sub sub OP_16)
-(rtype sll sll OP_1)
-(rtype srl srl OP_2)
-(rtype sra sra OP_3)
-(rtype xor xor OP_4)
-(rtype or  or OP_20)
-(rtype and and OP_5)
-(rtype mult mult OP_17)
-(rtype rem rem OP_6)
-(rtype remu remu OP_22)
-(rtype div div OP_7)
-(rtype divu divu OP_23)
-(rtype cmp cmp OP_24)
+(rtype sub sub OP_1)
+(rtype cmp cmp OP_9)
+(rtype sll sll OP_2)
+(rtype srl srl OP_3)
+(rtype sra sra OP_4)
+(rtype xor xor OP_5)
+(rtype or  or OP_6)
+(rtype and and OP_7)
+
+(rtype mult mult OP_11)
+(rtype multu multu OP_10)
+(rtype div div OP_8)
+(rtype divu divu OP_9)
+(rtype rem rem OP_13)
+(rtype remu remu OP_12)
 
 
 ; ITYPE 
 (itype addi add OP_0)
-(itype subi sub OP_0)
-(itype slli sll OP_1)
-(itype srli srl OP_2)
-(itype srai sra OP_3)
-(itype xori xor OP_4)
-(itype ori or  OP_20)
-(itype andi and OP_5)
-(itype multi mult OP_17)
-(itype remi rem OP_6)
-(itype remui remu OP_22)
-(itype divi div OP_7)
-(itype divui divu OP_23)
-(itype cmpi cmp OP_16)
+(itype cmpi cmp OP_1)
+(itype slli sll OP_2)
+(itype srli srl OP_3)
+(itype srai sra OP_4)
+(itype xori xor OP_5)
+(itype ori or  OP_6)
+(itype andi and OP_7)
+
+(itype multi mult OP_11)
+(itype multui multu OP_10)
+(itype divi div OP_8)
+(itype divui divu OP_9)
+(itype remi rem OP_13)
+(itype remui remu OP_12)
 
 ; ITYPE lui
-(itype-lui lui lui OP_8)
-(itype-sp mcsr mcsr OP_9)
-(itype-sp mrcs mrcs OP_13)
+(itype-lui lui lui OP_31)
 
-
-(itype-mem lw lw OP_25)
-(itype-mem lh lh OP_26)
-(itype-mem lb lb OP_27)
-(itype-mem sw sw OP_29)
-(itype-mem sh sh OP_30)
-(itype-mem sb sb OP_31)
-(itype-mem-u lhu lhu OP_26)
-(itype-mem-u lbu lbu OP_27)
-
-
+(itype-mem lw lw OP_24)
+(itype-mem lh lh OP_27)
+(itype-mem lhu lhu OP_25)
+(itype-mem lb lb OP_30)
+(itype-mem lbu lbu OP_28)
+(itype-mem sw sw OP_16)
+(itype-mem sh sh OP_17)
+(itype-mem sb sb OP_20)
 
 (btype-pc bnepc   bne  COND_0)
 (btype-pc beqpc   beq  COND_1)
@@ -478,6 +421,7 @@
 (btype-pc bugtpc  bugt COND_9)
 (btype-pc bugepc  buge COND_10)
 (btype-pc callpc  call COND_13)
+(btype-pc scall  scall COND_15)
 
 (btype-reg bnereg   bne  COND_0)
 (btype-reg beqreg   beq  COND_1)
@@ -491,4 +435,3 @@
 (btype-reg bugtreg  bugt COND_9)
 (btype-reg bugereg  buge COND_10)
 (btype-reg callreg  call COND_13)
-
