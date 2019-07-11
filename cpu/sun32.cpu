@@ -364,7 +364,7 @@
 ; RTYPE
 (rtype add add OP_0)
 (rtype sub sub OP_1)
-(rtype cmp cmp OP_9)
+(rtype cmp cmp OP_25)
 (rtype sll sll OP_2)
 (rtype srl srl OP_3)
 (rtype sra sra OP_4)
