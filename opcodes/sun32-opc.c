@@ -3,7 +3,7 @@
 
 THIS FILE IS MACHINE GENERATED WITH CGEN.
 
-Copyright (C) 1996-2018 Free Software Foundation, Inc.
+Copyright (C) 1996-2019 Free Software Foundation, Inc.
 
 This file is part of the GNU Binutils and/or GDB, the GNU debugger.
 
@@ -58,6 +58,10 @@ static const CGEN_IFMT ifmt_lda_lo ATTRIBUTE_UNUSED = {
 
 static const CGEN_IFMT ifmt_ret ATTRIBUTE_UNUSED = {
   32, 32, 0xffffffff, { { F (F_TYPE) }, { F (F_COND) }, { F (F_MODE) }, { F (F_XXXT25) }, { 0 } }
+};
+
+static const CGEN_IFMT ifmt_nop ATTRIBUTE_UNUSED = {
+  32, 32, 0xffffffff, { { F (F_TYPE) }, { F (F_OP) }, { F (F_RD) }, { F (F_RA) }, { F (F_RB) }, { F (F_X) }, { 0 } }
 };
 
 static const CGEN_IFMT ifmt_add ATTRIBUTE_UNUSED = {
@@ -123,6 +127,18 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
     { { MNEM, 0 } },
     & ifmt_ret, { 0xb0000000 }
   },
+/* nop */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, 0 } },
+    & ifmt_nop, { 0x0 }
+  },
+/* hlt */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, 0 } },
+    & ifmt_nop, { 0x3e000000 }
+  },
 /* add $rd,$ra,$rb */
   {
     { 0, 0, 0, 0 },
@@ -139,7 +155,7 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
-    & ifmt_add, { 0x12000000 }
+    & ifmt_add, { 0x22000000 }
   },
 /* sll $rd,$ra,$rb */
   {
@@ -213,11 +229,29 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
     { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
     & ifmt_add, { 0x18000000 }
   },
+/* msr $rd,$ra,$rb */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+    & ifmt_add, { 0x38000000 }
+  },
+/* mrs $rd,$ra,$rb */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+    & ifmt_add, { 0x30000000 }
+  },
 /* add $rd,$i15($ra) */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
     & ifmt_addi, { 0x40000000 }
+  },
+/* sub $rd,$ra,$rb */
+  {
+    { 0, 0, 0, 0 },
+    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+    & ifmt_add, { 0x0 }
   },
 /* cmp $rd,$i15($ra) */
   {
@@ -307,25 +341,25 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (M14), '(', OP (RA), ')', 0 } },
-    & ifmt_lw, { 0x70000000 }
+    & ifmt_lw, { 0x74000000 }
   },
 /* lh $rd,$m14($ra) */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (M14), '(', OP (RA), ')', 0 } },
-    & ifmt_lw, { 0x76000000 }
+    & ifmt_lw, { 0x72000000 }
   },
 /* lhu $rd,$m14($ra) */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (M14), '(', OP (RA), ')', 0 } },
-    & ifmt_lw, { 0x72000000 }
+    & ifmt_lw, { 0x7a000000 }
   },
 /* lb $rd,$m14($ra) */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (M14), '(', OP (RA), ')', 0 } },
-    & ifmt_lw, { 0x7c000000 }
+    & ifmt_lw, { 0x70000000 }
   },
 /* lbu $rd,$m14($ra) */
   {
@@ -337,7 +371,7 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (M14), '(', OP (RA), ')', 0 } },
-    & ifmt_lw, { 0x60000000 }
+    & ifmt_lw, { 0x64000000 }
   },
 /* sh $rd,$m14($ra) */
   {
@@ -349,7 +383,7 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (M14), '(', OP (RA), ')', 0 } },
-    & ifmt_lw, { 0x68000000 }
+    & ifmt_lw, { 0x60000000 }
   },
 /* bne $t25 */
   {

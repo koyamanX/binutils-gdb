@@ -3,7 +3,7 @@
 
 THIS FILE IS MACHINE GENERATED WITH CGEN.
 
-Copyright (C) 1996-2018 Free Software Foundation, Inc.
+Copyright (C) 1996-2019 Free Software Foundation, Inc.
 
 This file is part of the GNU Binutils and/or GDB, the GNU debugger.
 
@@ -159,14 +159,56 @@ static CGEN_KEYWORD_ENTRY sun32_cgen_opval_h_gr_entries[] =
   { "r29", 29, {0, {{{0, 0}}}}, 0, 0 },
   { "r30", 30, {0, {{{0, 0}}}}, 0, 0 },
   { "r31", 31, {0, {{{0, 0}}}}, 0, 0 },
-  { "sp", 30, {0, {{{0, 0}}}}, 0, 0 },
-  { "gp", 29, {0, {{{0, 0}}}}, 0, 0 }
+  { "sp", 30, {0, {{{0, 0}}}}, 0, 0 }
 };
 
 CGEN_KEYWORD sun32_cgen_opval_h_gr =
 {
   & sun32_cgen_opval_h_gr_entries[0],
-  34,
+  33,
+  0, 0, 0, 0, ""
+};
+
+static CGEN_KEYWORD_ENTRY sun32_cgen_opval_h_sr_entries[] =
+{
+  { "CSR", 0, {0, {{{0, 0}}}}, 0, 0 },
+  { "x1", 1, {0, {{{0, 0}}}}, 0, 0 },
+  { "x2", 2, {0, {{{0, 0}}}}, 0, 0 },
+  { "x3", 3, {0, {{{0, 0}}}}, 0, 0 },
+  { "x4", 4, {0, {{{0, 0}}}}, 0, 0 },
+  { "x5", 5, {0, {{{0, 0}}}}, 0, 0 },
+  { "x6", 6, {0, {{{0, 0}}}}, 0, 0 },
+  { "x7", 7, {0, {{{0, 0}}}}, 0, 0 },
+  { "x8", 8, {0, {{{0, 0}}}}, 0, 0 },
+  { "x9", 9, {0, {{{0, 0}}}}, 0, 0 },
+  { "x10", 10, {0, {{{0, 0}}}}, 0, 0 },
+  { "x11", 11, {0, {{{0, 0}}}}, 0, 0 },
+  { "x12", 12, {0, {{{0, 0}}}}, 0, 0 },
+  { "x13", 13, {0, {{{0, 0}}}}, 0, 0 },
+  { "x14", 14, {0, {{{0, 0}}}}, 0, 0 },
+  { "x15", 15, {0, {{{0, 0}}}}, 0, 0 },
+  { "x16", 16, {0, {{{0, 0}}}}, 0, 0 },
+  { "x17", 17, {0, {{{0, 0}}}}, 0, 0 },
+  { "x18", 18, {0, {{{0, 0}}}}, 0, 0 },
+  { "x19", 19, {0, {{{0, 0}}}}, 0, 0 },
+  { "x20", 20, {0, {{{0, 0}}}}, 0, 0 },
+  { "x21", 21, {0, {{{0, 0}}}}, 0, 0 },
+  { "x22", 22, {0, {{{0, 0}}}}, 0, 0 },
+  { "x23", 23, {0, {{{0, 0}}}}, 0, 0 },
+  { "x24", 24, {0, {{{0, 0}}}}, 0, 0 },
+  { "x25", 25, {0, {{{0, 0}}}}, 0, 0 },
+  { "x26", 26, {0, {{{0, 0}}}}, 0, 0 },
+  { "x27", 27, {0, {{{0, 0}}}}, 0, 0 },
+  { "x28", 28, {0, {{{0, 0}}}}, 0, 0 },
+  { "x29", 29, {0, {{{0, 0}}}}, 0, 0 },
+  { "x30", 30, {0, {{{0, 0}}}}, 0, 0 },
+  { "x31", 31, {0, {{{0, 0}}}}, 0, 0 }
+};
+
+CGEN_KEYWORD sun32_cgen_opval_h_sr =
+{
+  & sun32_cgen_opval_h_sr_entries[0],
+  32,
   0, 0, 0, 0, ""
 };
 
@@ -184,6 +226,7 @@ const CGEN_HW_ENTRY sun32_cgen_hw_table[] =
   { "h-iaddr", HW_H_IADDR, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } },
   { "h-pc", HW_H_PC, CGEN_ASM_NONE, 0, { 0|A(PC), { { { (1<<MACH_BASE), 0 } } } } },
   { "h-gr", HW_H_GR, CGEN_ASM_KEYWORD, (PTR) & sun32_cgen_opval_h_gr, { 0, { { { (1<<MACH_BASE), 0 } } } } },
+  { "h-sr", HW_H_SR, CGEN_ASM_KEYWORD, (PTR) & sun32_cgen_opval_h_sr, { 0, { { { (1<<MACH_BASE), 0 } } } } },
   { "h-int15", HW_H_INT15, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } },
   { "h-uint20", HW_H_UINT20, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } },
   { "h-uint18", HW_H_UINT18, CGEN_ASM_NONE, 0, { 0, { { { (1<<MACH_BASE), 0 } } } } },
@@ -333,6 +376,16 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
     SUN32_INSN_RETI, "reti", "reti", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
+/* nop */
+  {
+    SUN32_INSN_NOP, "nop", "nop", 32,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* hlt */
+  {
+    SUN32_INSN_HLT, "hlt", "hlt", 32,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
 /* add $rd,$ra,$rb */
   {
     SUN32_INSN_ADD, "add", "add", 32,
@@ -408,9 +461,24 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
     SUN32_INSN_REMU, "remu", "remu", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
+/* msr $rd,$ra,$rb */
+  {
+    SUN32_INSN_MSR, "msr", "msr", 32,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* mrs $rd,$ra,$rb */
+  {
+    SUN32_INSN_MRS, "mrs", "mrs", 32,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
 /* add $rd,$i15($ra) */
   {
     SUN32_INSN_ADDI, "addi", "add", 32,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
+/* sub $rd,$ra,$rb */
+  {
+    SUN32_INSN_SUBI, "subi", "sub", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
 /* cmp $rd,$i15($ra) */

@@ -3,7 +3,7 @@
 
 THIS FILE IS MACHINE GENERATED WITH CGEN.
 
-Copyright (C) 1996-2018 Free Software Foundation, Inc.
+Copyright (C) 1996-2019 Free Software Foundation, Inc.
 
 This file is part of the GNU Binutils and/or GDB, the GNU debugger.
 
@@ -83,6 +83,42 @@ typedef enum insn_op {
 typedef enum insn_s {
   S_0, S_1
 } INSN_S;
+
+/* Enum declaration for insn rd enums.  */
+typedef enum insn_rd {
+  RD_0, RD_1, RD_2, RD_3
+ , RD_4, RD_5, RD_6, RD_7
+ , RD_8, RD_9, RD_10, RD_11
+ , RD_12, RD_13, RD_14, RD_15
+ , RD_16, RD_17, RD_18, RD_19
+ , RD_20, RD_21, RD_22, RD_23
+ , RD_24, RD_25, RD_26, RD_27
+ , RD_28, RD_29, RD_30, RD_31
+} INSN_RD;
+
+/* Enum declaration for insn ra enums.  */
+typedef enum insn_ra {
+  RA_0, RA_1, RA_2, RA_3
+ , RA_4, RA_5, RA_6, RA_7
+ , RA_8, RA_9, RA_10, RA_11
+ , RA_12, RA_13, RA_14, RA_15
+ , RA_16, RA_17, RA_18, RA_19
+ , RA_20, RA_21, RA_22, RA_23
+ , RA_24, RA_25, RA_26, RA_27
+ , RA_28, RA_29, RA_30, RA_31
+} INSN_RA;
+
+/* Enum declaration for insn rb enums.  */
+typedef enum insn_rb {
+  RB_0, RB_1, RB_2, RB_3
+ , RB_4, RB_5, RB_6, RB_7
+ , RB_8, RB_9, RB_10, RB_11
+ , RB_12, RB_13, RB_14, RB_15
+ , RB_16, RB_17, RB_18, RB_19
+ , RB_20, RB_21, RB_22, RB_23
+ , RB_24, RB_25, RB_26, RB_27
+ , RB_28, RB_29, RB_30, RB_31
+} INSN_RB;
 
 /* Enum declaration for insn x enums.  */
 typedef enum insn_x {
@@ -195,8 +231,9 @@ typedef enum cgen_hw_attr {
 /* Enum declaration for sun32 hardware types.  */
 typedef enum cgen_hw_type {
   HW_H_MEMORY, HW_H_SINT, HW_H_UINT, HW_H_ADDR
- , HW_H_IADDR, HW_H_PC, HW_H_GR, HW_H_INT15
- , HW_H_UINT20, HW_H_UINT18, HW_H_UINT14, HW_MAX
+ , HW_H_IADDR, HW_H_PC, HW_H_GR, HW_H_SR
+ , HW_H_INT15, HW_H_UINT20, HW_H_UINT18, HW_H_UINT14
+ , HW_MAX
 } CGEN_HW_TYPE;
 
 #define MAX_HW ((int) HW_MAX)
@@ -278,6 +315,7 @@ extern const CGEN_ATTR_TABLE sun32_cgen_insn_attr_table[];
 /* Hardware decls.  */
 
 extern CGEN_KEYWORD sun32_cgen_opval_h_gr;
+extern CGEN_KEYWORD sun32_cgen_opval_h_sr;
 
 extern const CGEN_HW_ENTRY sun32_cgen_hw_table[];
 

@@ -81,7 +81,24 @@
 			(r15 15) (r16 16) (r17 17) (r18 18) (r19 19)
 			(r20 20) (r21 21) (r22 22) (r23 23) (r24 24)
 			(r25 25) (r26 26) (r27 27) (r28 28) (r29 29)
-			(r30 30) (r31 31) (sp 30)  (gp  29)
+			(r30 30) (r31 31) (sp 30)  
+		)
+	)
+	()
+	()
+)
+(dnh h-sr "Special purpose register"
+	()
+	(register WI (32))
+	(keyword ""
+		(
+			(CSR 0) (x1 1) (x2 2) (x3 3) (x4 4)
+			(x5 5)  (x6 6) (x7 7) (x8 8) (x9 9)
+			(x10 10)  (x11 11) (x12 12) (x13 13) (x14 14)
+			(x15 15)  (x16 16) (x17 17) (x18 18) (x19 19)
+			(x20 20)  (x21 21) (x22 22) (x23 23) (x24 24)
+			(x25 25)  (x26 26) (x27 27) (x28 28) (x29 29)
+			(x30 30)  (x31 31) 
 		)
 	)
 	()
@@ -199,6 +216,27 @@
 	S_ 
 	f-s 
 	("0" "1")
+)
+(define-normal-insn-enum insn-rd
+	"insn rd enums"
+	()
+	RD_
+	f-rd
+	(.map .str (.iota 32))
+)
+(define-normal-insn-enum insn-ra
+	"insn ra enums"
+	()
+	RA_
+	f-ra
+	(.map .str (.iota 32))
+)
+(define-normal-insn-enum insn-rb
+	"insn rb enums"
+	()
+	RB_
+	f-rb
+	(.map .str (.iota 32))
 )
 (define-normal-insn-enum insn-x 
 	"insn x enums" 
@@ -358,13 +396,27 @@
 	()
 	()
 )
-
-
+(dni nop
+	("nop")
+	()
+	("nop")
+	(+ TYPE_0 OP_0 RD_0 RA_0 RB_0 XXX_0)
+	()
+	()
+)
+(dni hlt
+	("hlt")
+	()
+	("hlt")
+	(+ TYPE_0 OP_31 RD_0 RA_0 RB_0 XXX_0)
+	()
+	()
+)
 
 ; RTYPE
 (rtype add add OP_0)
 (rtype sub sub OP_1)
-(rtype cmp cmp OP_25)
+(rtype cmp cmp OP_17)
 (rtype sll sll OP_2)
 (rtype srl srl OP_3)
 (rtype sra sra OP_4)
@@ -379,9 +431,12 @@
 (rtype rem rem OP_13)
 (rtype remu remu OP_12)
 
+(rtype msr msr OP_28)
+(rtype mrs mrs OP_24)
 
 ; ITYPE 
 (itype addi add OP_0)
+(rtype subi sub OP_0)
 (itype cmpi cmp OP_1)
 (itype slli sll OP_2)
 (itype srli srl OP_3)
@@ -400,14 +455,14 @@
 ; ITYPE lui
 (itype-lui lui lui OP_31)
 
-(itype-mem lw lw OP_24)
-(itype-mem lh lh OP_27)
-(itype-mem lhu lhu OP_25)
-(itype-mem lb lb OP_30)
+(itype-mem lw lw OP_26)
+(itype-mem lh lh OP_25)
+(itype-mem lhu lhu OP_29)
+(itype-mem lb lb OP_24)
 (itype-mem lbu lbu OP_28)
-(itype-mem sw sw OP_16)
+(itype-mem sw sw OP_18)
 (itype-mem sh sh OP_17)
-(itype-mem sb sb OP_20)
+(itype-mem sb sb OP_16)
 
 (btype-pc bnepc   bne  COND_0)
 (btype-pc beqpc   beq  COND_1)
