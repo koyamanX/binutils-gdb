@@ -386,6 +386,11 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
     SUN32_INSN_HLT, "hlt", "hlt", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
+/* cmp $ra,$i15 */
+  {
+    SUN32_INSN_CMPI, "cmpi", "cmp", 32,
+    { 0, { { { (1<<MACH_BASE), 0 } } } }
+  },
 /* add $rd,$ra,$rb */
   {
     SUN32_INSN_ADD, "add", "add", 32,
@@ -476,14 +481,9 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
     SUN32_INSN_ADDI, "addi", "add", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* sub $rd,$ra,$rb */
+/* sub $rd,$i15($ra) */
   {
     SUN32_INSN_SUBI, "subi", "sub", 32,
-    { 0, { { { (1<<MACH_BASE), 0 } } } }
-  },
-/* cmp $rd,$i15($ra) */
-  {
-    SUN32_INSN_CMPI, "cmpi", "cmp", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
 /* sll $rd,$i15($ra) */

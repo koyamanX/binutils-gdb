@@ -412,17 +412,27 @@
 	()
 	()
 )
+(dni cmpi
+	("cmp")
+	()
+	("cmp $ra,$i15")
+	(+ TYPE_1 OP_23 RD_0 ra i15)
+	()
+	()
+)
+
+
 
 ; RTYPE
 (rtype add add OP_0)
-(rtype sub sub OP_1)
-(rtype cmp cmp OP_17)
+(rtype sub sub OP_7)
+(rtype cmp cmp OP_23)
 (rtype sll sll OP_2)
 (rtype srl srl OP_3)
 (rtype sra sra OP_4)
 (rtype xor xor OP_5)
 (rtype or  or OP_6)
-(rtype and and OP_7)
+(rtype and and OP_1)
 
 (rtype mult mult OP_11)
 (rtype multu multu OP_10)
@@ -436,14 +446,13 @@
 
 ; ITYPE 
 (itype addi add OP_0)
-(rtype subi sub OP_0)
-(itype cmpi cmp OP_1)
+(itype subi sub OP_0)
 (itype slli sll OP_2)
 (itype srli srl OP_3)
 (itype srai sra OP_4)
 (itype xori xor OP_5)
 (itype ori or  OP_6)
-(itype andi and OP_7)
+(itype andi and OP_1)
 
 (itype multi mult OP_11)
 (itype multui multu OP_10)
