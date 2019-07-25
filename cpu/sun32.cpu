@@ -436,8 +436,8 @@
 
 (rtype mult mult OP_11)
 (rtype multu multu OP_10)
-(rtype div div OP_8)
-(rtype divu divu OP_9)
+(rtype div div OP_9)
+(rtype divu divu OP_8)
 (rtype rem rem OP_13)
 (rtype remu remu OP_12)
 
@@ -456,8 +456,8 @@
 
 (itype multi mult OP_11)
 (itype multui multu OP_10)
-(itype divi div OP_8)
-(itype divui divu OP_9)
+(itype divi div OP_9)
+(itype divui divu OP_8)
 (itype remi rem OP_13)
 (itype remui remu OP_12)
 
