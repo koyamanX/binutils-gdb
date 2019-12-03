@@ -73,6 +73,7 @@ struct cgen_fields
   long f_ra;
   long f_rb;
   long f_x;
+  long f_xxx;
   long f_xxxh;
   long f_xxxl;
   long f_xxxt25;

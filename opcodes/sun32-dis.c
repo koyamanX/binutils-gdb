@@ -118,6 +118,12 @@ sun32_cgen_print_operand (CGEN_CPU_DESC cd,
     case SUN32_OPERAND_RD :
       print_keyword (cd, info, & sun32_cgen_opval_h_gr, fields->f_rd, 0);
       break;
+    case SUN32_OPERAND_SVRA :
+      print_keyword (cd, info, & sun32_cgen_opval_h_sr, fields->f_ra, 0);
+      break;
+    case SUN32_OPERAND_SVRD :
+      print_keyword (cd, info, & sun32_cgen_opval_h_sr, fields->f_rd, 0);
+      break;
     case SUN32_OPERAND_T20 :
       print_address (cd, info, fields->f_t20r, 0, pc, length);
       break;

@@ -72,6 +72,10 @@ static const CGEN_IFMT ifmt_add ATTRIBUTE_UNUSED = {
   32, 32, 0xfe0003ff, { { F (F_TYPE) }, { F (F_OP) }, { F (F_RD) }, { F (F_RA) }, { F (F_RB) }, { F (F_X) }, { 0 } }
 };
 
+static const CGEN_IFMT ifmt_msr ATTRIBUTE_UNUSED = {
+  32, 32, 0xfe007fff, { { F (F_TYPE) }, { F (F_OP) }, { F (F_RD) }, { F (F_RA) }, { F (F_XXX) }, { 0 } }
+};
+
 static const CGEN_IFMT ifmt_addi ATTRIBUTE_UNUSED = {
   32, 32, 0xfe000000, { { F (F_TYPE) }, { F (F_OP) }, { F (F_RD) }, { F (F_RA) }, { F (F_I15) }, { 0 } }
 };
@@ -219,13 +223,13 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
-    & ifmt_add, { 0x10000000 }
+    & ifmt_add, { 0x12000000 }
   },
 /* divu $rd,$ra,$rb */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
-    & ifmt_add, { 0x12000000 }
+    & ifmt_add, { 0x10000000 }
   },
 /* rem $rd,$ra,$rb */
   {
@@ -239,17 +243,17 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
     { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
     & ifmt_add, { 0x18000000 }
   },
-/* msr $rd,$ra,$rb */
+/* msr $svrd,$ra */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
-    & ifmt_add, { 0x38000000 }
+    { { MNEM, ' ', OP (SVRD), ',', OP (RA), 0 } },
+    & ifmt_msr, { 0x38000000 }
   },
-/* mrs $rd,$ra,$rb */
+/* mrs $rd,$svra */
   {
     { 0, 0, 0, 0 },
-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
-    & ifmt_add, { 0x30000000 }
+    { { MNEM, ' ', OP (RD), ',', OP (SVRA), 0 } },
+    & ifmt_msr, { 0x30000000 }
   },
 /* add $rd,$i15($ra) */
   {
@@ -315,13 +319,13 @@ static const CGEN_OPCODE sun32_cgen_insn_opcode_table[MAX_INSNS] =
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
-    & ifmt_addi, { 0x50000000 }
+    & ifmt_addi, { 0x52000000 }
   },
 /* divu $rd,$i15($ra) */
   {
     { 0, 0, 0, 0 },
     { { MNEM, ' ', OP (RD), ',', OP (I15), '(', OP (RA), ')', 0 } },
-    & ifmt_addi, { 0x52000000 }
+    & ifmt_addi, { 0x50000000 }
   },
 /* rem $rd,$i15($ra) */
   {

@@ -251,6 +251,7 @@ const CGEN_IFLD sun32_cgen_ifld_table[] =
   { SUN32_F_RA, "f-ra", 0, 32, 19, 5, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_RB, "f-rb", 0, 32, 14, 5, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_X, "f-x", 0, 32, 9, 10, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
+  { SUN32_F_XXX, "f-xxx", 0, 32, 14, 15, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_XXXH, "f-xxxh", 0, 32, 1, 2, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_XXXL, "f-xxxl", 0, 32, 15, 1, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
   { SUN32_F_XXXT25, "f-xxxt25", 0, 32, 24, 25, { 0, { { { (1<<MACH_BASE), 0 } } } }  },
@@ -303,6 +304,14 @@ const CGEN_OPERAND sun32_cgen_operand_table[] =
 /* rb: source register b */
   { "rb", SUN32_OPERAND_RB, HW_H_GR, 14, 5,
     { 0, { (const PTR) &sun32_cgen_ifld_table[SUN32_F_RB] } },
+    { 0, { { { (1<<MACH_BASE), 0 } } } }  },
+/* svrd: supervisor destination register */
+  { "svrd", SUN32_OPERAND_SVRD, HW_H_SR, 24, 5,
+    { 0, { (const PTR) &sun32_cgen_ifld_table[SUN32_F_RD] } },
+    { 0, { { { (1<<MACH_BASE), 0 } } } }  },
+/* svra: supervisor source register a */
+  { "svra", SUN32_OPERAND_SVRA, HW_H_SR, 19, 5,
+    { 0, { (const PTR) &sun32_cgen_ifld_table[SUN32_F_RA] } },
     { 0, { { { (1<<MACH_BASE), 0 } } } }  },
 /* u20: u20 long imm */
   { "u20", SUN32_OPERAND_U20, HW_H_UINT20, 19, 20,
@@ -466,12 +475,12 @@ static const CGEN_IBASE sun32_cgen_insn_table[MAX_INSNS] =
     SUN32_INSN_REMU, "remu", "remu", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* msr $rd,$ra,$rb */
+/* msr $svrd,$ra */
   {
     SUN32_INSN_MSR, "msr", "msr", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }
   },
-/* mrs $rd,$ra,$rb */
+/* mrs $rd,$svra */
   {
     SUN32_INSN_MRS, "mrs", "mrs", 32,
     { 0, { { { (1<<MACH_BASE), 0 } } } }

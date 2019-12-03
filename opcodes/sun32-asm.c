@@ -171,6 +171,12 @@ sun32_cgen_parse_operand (CGEN_CPU_DESC cd,
     case SUN32_OPERAND_RD :
       errmsg = cgen_parse_keyword (cd, strp, & sun32_cgen_opval_h_gr, & fields->f_rd);
       break;
+    case SUN32_OPERAND_SVRA :
+      errmsg = cgen_parse_keyword (cd, strp, & sun32_cgen_opval_h_sr, & fields->f_ra);
+      break;
+    case SUN32_OPERAND_SVRD :
+      errmsg = cgen_parse_keyword (cd, strp, & sun32_cgen_opval_h_sr, & fields->f_rd);
+      break;
     case SUN32_OPERAND_T20 :
       {
         bfd_vma value = 0;

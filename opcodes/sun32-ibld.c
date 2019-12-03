@@ -597,6 +597,12 @@ sun32_cgen_insert_operand (CGEN_CPU_DESC cd,
     case SUN32_OPERAND_RD :
       errmsg = insert_normal (cd, fields->f_rd, 0, 0, 24, 5, 32, total_length, buffer);
       break;
+    case SUN32_OPERAND_SVRA :
+      errmsg = insert_normal (cd, fields->f_ra, 0, 0, 19, 5, 32, total_length, buffer);
+      break;
+    case SUN32_OPERAND_SVRD :
+      errmsg = insert_normal (cd, fields->f_rd, 0, 0, 24, 5, 32, total_length, buffer);
+      break;
     case SUN32_OPERAND_T20 :
       errmsg = insert_normal (cd, fields->f_t20r, 0|(1<<CGEN_IFLD_SIGNED), 0, 19, 20, 32, total_length, buffer);
       break;
@@ -674,6 +680,12 @@ sun32_cgen_extract_operand (CGEN_CPU_DESC cd,
     case SUN32_OPERAND_RD :
       length = extract_normal (cd, ex_info, insn_value, 0, 0, 24, 5, 32, total_length, pc, & fields->f_rd);
       break;
+    case SUN32_OPERAND_SVRA :
+      length = extract_normal (cd, ex_info, insn_value, 0, 0, 19, 5, 32, total_length, pc, & fields->f_ra);
+      break;
+    case SUN32_OPERAND_SVRD :
+      length = extract_normal (cd, ex_info, insn_value, 0, 0, 24, 5, 32, total_length, pc, & fields->f_rd);
+      break;
     case SUN32_OPERAND_T20 :
       length = extract_normal (cd, ex_info, insn_value, 0|(1<<CGEN_IFLD_SIGNED), 0, 19, 20, 32, total_length, pc, & fields->f_t20r);
       break;
@@ -746,6 +758,12 @@ sun32_cgen_get_int_operand (CGEN_CPU_DESC cd ATTRIBUTE_UNUSED,
     case SUN32_OPERAND_RD :
       value = fields->f_rd;
       break;
+    case SUN32_OPERAND_SVRA :
+      value = fields->f_ra;
+      break;
+    case SUN32_OPERAND_SVRD :
+      value = fields->f_rd;
+      break;
     case SUN32_OPERAND_T20 :
       value = fields->f_t20r;
       break;
@@ -798,6 +816,12 @@ sun32_cgen_get_vma_operand (CGEN_CPU_DESC cd ATTRIBUTE_UNUSED,
       value = fields->f_rb;
       break;
     case SUN32_OPERAND_RD :
+      value = fields->f_rd;
+      break;
+    case SUN32_OPERAND_SVRA :
+      value = fields->f_ra;
+      break;
+    case SUN32_OPERAND_SVRD :
       value = fields->f_rd;
       break;
     case SUN32_OPERAND_T20 :
@@ -861,6 +885,12 @@ sun32_cgen_set_int_operand (CGEN_CPU_DESC cd ATTRIBUTE_UNUSED,
     case SUN32_OPERAND_RD :
       fields->f_rd = value;
       break;
+    case SUN32_OPERAND_SVRA :
+      fields->f_ra = value;
+      break;
+    case SUN32_OPERAND_SVRD :
+      fields->f_rd = value;
+      break;
     case SUN32_OPERAND_T20 :
       fields->f_t20r = value;
       break;
@@ -910,6 +940,12 @@ sun32_cgen_set_vma_operand (CGEN_CPU_DESC cd ATTRIBUTE_UNUSED,
       fields->f_rb = value;
       break;
     case SUN32_OPERAND_RD :
+      fields->f_rd = value;
+      break;
+    case SUN32_OPERAND_SVRA :
+      fields->f_ra = value;
+      break;
+    case SUN32_OPERAND_SVRD :
       fields->f_rd = value;
       break;
     case SUN32_OPERAND_T20 :

@@ -137,6 +137,7 @@
 (dwf f-rb   "RB  Field"  () 0 32 14 5 UINT (#f) (#f))
 ; unused feild which must be filled with zero
 (dwf f-x    "X   Field"  () 0 32 9 10 UINT (#f) (#f))
+(dwf f-xxx   "X   Field"  () 0 32 14 15 UINT (#f) (#f))
 (dwf f-xxxh "xxx for 18hi" () 0 32 1 2 UINT (#f) (#f))
 (dwf f-xxxl "xxx for 16lo" () 0 32 15 1 UINT (#f) (#f))
 (dwf f-xxxt25 "" () 0 32 24 25 INT (#f) (#f))
@@ -168,6 +169,8 @@
 (dnop rd "destination register" () h-gr f-rd)
 (dnop ra "source register a" () h-gr f-ra)
 (dnop rb "source register b" () h-gr f-rb)
+(dnop svrd "supervisor destination register" () h-sr f-rd)
+(dnop svra "supervisor source register a" () h-sr f-ra)
 (dnop u20 "u20 long imm" () h-uint20 f-u20)
 (dnop i15 "i15 imm without shift" () h-int15 f-i15)
 (dnop m11  "i11 byte aligned memory"  () h-addr  f-mems)
@@ -245,6 +248,13 @@
 	f-x 
 	("0")
 )
+(define-normal-insn-enum insn-xxx
+	"insn x enums" 
+	() 
+	XXXXX_
+	f-xxx 
+	("0")
+)
 (define-normal-insn-enum insn-mode 
 	"insn amode enums" 
 	() 
@@ -300,6 +310,31 @@
 		)
 	)
 )
+(define-pmacro (rtype-sr-gr name mnemonic opcode)
+	(begin
+		(dni name
+			(.str mnemonic " rtype supervisor mode")
+			()
+			(.str mnemonic " $svrd,$ra")
+			(+ TYPE_0 opcode rd ra XXXXX_0)
+			()
+			()
+		)
+	)
+)
+(define-pmacro (rtype-gr-sr name mnemonic opcode)
+	(begin
+		(dni name
+			(.str mnemonic " rtype supervisor mode")
+			()
+			(.str mnemonic " $rd,$svra")
+			(+ TYPE_0 opcode rd ra XXXXX_0)
+			()
+			()
+		)
+	)
+)
+
 (define-pmacro (itype-lui name mnemonic opcode)
 	(begin
 		(dni name
@@ -441,8 +476,8 @@
 (rtype rem rem OP_13)
 (rtype remu remu OP_12)
 
-(rtype msr msr OP_28)
-(rtype mrs mrs OP_24)
+(rtype-sr-gr msr msr OP_28)
+(rtype-gr-sr mrs mrs OP_24)
 
 ; ITYPE 
 (itype addi add OP_0)
