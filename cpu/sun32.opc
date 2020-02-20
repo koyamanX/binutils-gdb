@@ -24,6 +24,10 @@
 /* -- opc.h */
 /* -- */
 /* -- opc.c */
+#undef CGEN_DIS_HASH
+#undef CGEN_DIS_HASH_SIZE
+#define CGEN_DIS_HASH(buf, value) ((*(unsigned char *) (buf)) & 0x3e)
+#define CGEN_DIS_HASH_SIZE 127
 /* -- */
 /* -- asm.c */
 static const char *MISSING_CLOSING_PARENTHESIS = N_("missing `)'");

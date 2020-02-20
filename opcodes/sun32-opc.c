@@ -32,6 +32,10 @@ This file is part of the GNU Binutils and/or GDB, the GNU debugger.
 #include "libiberty.h"
 
 /* -- opc.c */
+#undef CGEN_DIS_HASH
+#undef CGEN_DIS_HASH_SIZE
+#define CGEN_DIS_HASH(buf, value) ((*(unsigned char *) (buf)) & 0x3e)
+#define CGEN_DIS_HASH_SIZE 127
 /* -- */
 /* The hash functions are recorded here to help keep assembler code out of
    the disassembler and vice versa.  */
